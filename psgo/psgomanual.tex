@@ -1,0 +1,606 @@
+%% psgomanual.tex
+%% Copyright 2003,2001 V. Bos
+%
+% This program may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.2
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.2 or later is part of all distributions of LaTeX 
+% version 1999/12/01 or later.
+%
+% This program consists of the files:
+%
+%   psgo.sty
+%   psgomanual.tex
+%   psgomanual.ps
+%
+% RCS-ID: $Id: psgomanual.tex,v 1.6 2004/02/24 10:17:23 vbos Exp $
+%
+\documentclass[a4paper]{article}
+
+\usepackage{psgo,array,url}
+\newcommand{\pstricks}{\textsf{PSTricks}}
+
+\newcommand{\commandname}[1]{{\ttfamily\symbol{'134}#1}}
+% The following code is taken from the doc package. It defines a global 
+% macro \bslash that produces a bslash (if present in the current font). 
+\makeatletter
+{\catcode`\|=\z@ \catcode`\\=12 |gdef|bslash{\}}
+\makeatother
+\newcommand{\cmd}[1]{\texttt{\bslash #1}}
+
+\title{\psgo\\{\normalfont\normalsize Typesetting Go Diagrams with \pstricks}}
+\author{Victor Bos\\email: vbos@abo.fi}
+\date{September 04, 2008}
+
+
+\setgounit{0.4cm}
+
+\begin{document}
+\maketitle
+
+
+\section{Introduction}
+
+The \psgo{} package provides functionality to typeset Go diagrams in
+\LaTeXe. It is built on top of the \pstricks{} package, which is
+nowadays available in many \LaTeX{} distributions. Although \psgo{}
+does not understand the \emph{Smart Game Format} (SGF), it has support
+for all graphical markup properties of SGF FF[4], see
+\verb|http://www.red-bean.com/sgf/|.
+
+\section{Download and installation}
+
+The \psgo{} package can be found at CTAN (mirrors) in the directory
+\url{graphics/pstricks/contrib/psgo/}. It is also available from
+
+\medskip
+\url{http://www.abo.fi/~vbos/psgo-frame.html}
+
+\medskip\noindent To install the package, download the files
+\texttt{psgo.sty} and \texttt{psgomanual.tex} and put them in a
+directory where \LaTeX{} can find them. After that, test the
+installation by running \LaTeX{} on \texttt{psgomanual.tex}. 
+
+Note that \textsf{psgo} uses \textsf{pstricks} to draw
+graphics. Therefore, the same things that apply to viewing and
+printing documents with \textsf{pstricks} graphics also apply to
+documents with \textsf{psgo} graphics. In particular, it is usually
+better to use a PostScript viewer (e.g., \texttt{gv} or
+\texttt{gsview}) instead of a DVI viewer (like \texttt{xdvi} or
+\texttt{yap}).
+ 
+\section{Go boards}
+
+The interface of \psgo{} is based on how Go diagrams are usually
+displayed in books. That is, the rows of a $19\times19$ board are
+indexed by $1,2,\ldots,19$ and the columns are indexed by $A, B,
+\ldots, T$ (skipping $I$). Further, the lower left corner has index
+$(A, 1)$ and the upper right corner has index
+$(T,19)$. Figure~\ref{fig:empty:boards} shows a $19\times 19$ board
+and a $9\times9$ board. Note that the sizes of the boards are reduced
+in order to fit in one figure. To re-size a Go board, the command
+\verb|\setgounit| can be used. This command takes the desired
+horizontal unit distance as an argument. The default horizontal unit
+distance is~$0.6$cm. The vertical unit distance is computed by the
+\psgo{} package. For the diagrams in this document, except for the
+diagrams of Figure~\ref{fig:empty:boards}, we have set the horizontal
+unit distance to~$0.4$cm (\verb|\setgounit{0.4cm}|).
+
+\begin{figure}
+\setgounit{0.3cm}
+\begin{center}
+\begin{tabular}{cc}
+\begin{psgoboard}
+\end{psgoboard} &
+\begin{psgoboard}[9]
+\end{psgoboard}
+\end{tabular}
+\caption{Different size Go boards}
+\label{fig:empty:boards}
+\end{center}
+\end{figure}
+
+Go boards are defined in the \verb|psboard| environment of \psgo. This
+environment takes~1 optional parameter which indicates the size of the
+board (default size is~19). For instance, the boards of
+Figure~\ref{fig:empty:boards} were defined by:
+
+\begin{verbatim}
+\begin{psgoboard}
+\end{psgoboard}
+\begin{psgoboard}[9]
+\end{psgoboard}
+\end{verbatim}
+
+If the indices are not desired, the starred version \verb|psgoboard*|
+of the environment should be used. Figure \ref{fig:no:indices} shows
+the boards of Figure~\ref{fig:empty:boards} without indices. The code
+for these boards is given below.
+\begin{verbatim}
+\begin{psgoboard*}
+\end{psgoboard*}
+\begin{psgoboard*}[9]
+\end{psgoboard*}
+\end{verbatim}
+
+\begin{figure}
+\setgounit{0.3cm}
+\begin{center}
+\begin{tabular}{cc}
+\begin{psgoboard*}
+\end{psgoboard*} &
+\begin{psgoboard*}[9]
+\end{psgoboard*}
+\end{tabular}
+\caption{Go boards of Figure~\ref{fig:empty:boards} without indices}
+\label{fig:no:indices}
+\end{center}
+\end{figure}
+
+
+\section{Stones and moves}
+
+There are two commands to put stones on the board and one command to
+make pass moves. The first one is \verb|\stone| which takes three
+parameters: the color, the column, and the row of the stone. For
+example, \verb|\stone{black}{c}{4}| puts a black stone at
+position~$(C,4)$ (note that in the \LaTeX{} code, the columns are
+indicated by lower case characters). The \verb|\stone| command can be
+used to setup a particular configuration. For instance, the
+configuration of Figure~\ref{fig:ko:configuration} is defined as
+follows.
+
+\begin{verbatim}
+\begin{psgoboard}[9]
+\stone{white}{c}{3}
+\stone{white}{e}{3}
+\stone{white}{d}{2}
+\stone{white}{d}{4}
+\stone{black}{f}{3}
+\stone{black}{e}{2}
+\stone{black}{e}{4}
+\end{psgoboard}
+\end{verbatim}
+
+\begin{figure}
+\begin{center}
+\begin{psgoboard}[9]
+\stone{white}{c}{3}
+\stone{white}{e}{3}
+\stone{white}{d}{2}
+\stone{white}{d}{4}
+\stone{black}{f}{3}
+\stone{black}{e}{2}
+\stone{black}{e}{4}
+\end{psgoboard}
+\caption{Setting up a configuration}
+\label{fig:ko:configuration}
+\end{center}
+\end{figure}
+
+
+The second command is \verb|move| which takes two parameters: the
+column and the row of the next move. Moves are usually numbered. The
+counter that keeps track of the move number is
+called~\verb|gomove|. This is a normal \LaTeX{} counter and can be
+changed using ordinary \LaTeX-counter commands. The color of the
+stones placed by the \verb|\move| command alternates between
+successive moves. For example, \verb|\move{b}{3}| puts a stone on
+position~$(B, 3)$. If this was a black move, the stone is black,
+otherwise it is white. 
+
+In addition, there is a command for pass moves: \verb|\pass|. It is
+like \verb|\move| in that it increases the move number and changes the
+color for the next move, but it does not draw a stone on the board.
+
+It is time for an example. The following code generates a $9\times 9$
+board with six moves. Note that the third move (move number~2) is a pass by
+black. The result is depicted in Figure~\ref{fig:9x9:example}(a).
+
+\begin{verbatim}
+\begin{psgoboard}[9]
+\move{c}{3}
+\move{g}{7}
+\pass
+\move{f}{1}
+\move{a}{9}
+\end{psgoboard}
+\end{verbatim}
+
+
+As can be seen, the move numbers are displayed on the stones. The
+\verb|gomove| counter is never reset by the \psgo{} package. So, the
+move numbers just continue in subsequent diagrams. Of course, it is
+possible to reset the value of~\verb|gomove| manually. In that case,
+one should know that the \verb|\move| command increases the
+\verb|gomove| counter \emph{before} it draws the stone. So, if a
+diagram should start with move~0, one should issue the command
+\verb|\setcounter{gomove}{-1}| just before the diagram.
+
+If a diagram continues another diagram, the numbers on the stones
+played so far are usually not desirable. Therefore, \psgo{} has
+defined a starred version the move command: \verb|\move*|.  This
+command does not decorate stones with move numbers and it does not
+increase the \verb|gomove| counter.  For instance, if the game of
+Figure~\ref{fig:9x9:example}(a) is continued, all we have to do is
+copy\&paste the game played so far, replace the existing \verb|\move|
+commands by \verb|\move*|, and add some new \verb|\move| (unstarred!)
+commands to it. For convenience, there is also a \verb|\pass*| command; its
+effect is to change the color for the next move.  The code is given
+below and the result displayed in Figure~\ref{fig:9x9:example}(b).
+\begin{verbatim}
+\begin{psgoboard}[9]
+\move*{c}{3}
+\move*{g}{7}
+\pass*
+\move*{f}{1}
+\move*{a}{9}
+\move{f}{6}  % new \move commands
+\move{e}{6}
+\pass
+\move{c}{5}
+\end{psgoboard}
+\end{verbatim}
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{cc}
+\begin{psgoboard}[9]
+\move{c}{3}
+\move{g}{7}
+\pass
+\move{f}{1}
+\move{a}{9}
+\end{psgoboard}
+&
+\begin{psgoboard}[9]
+\move*{c}{3}
+\move*{g}{7}
+\pass*%
+\move*{f}{1}
+\move*{a}{9}
+\move{f}{6}
+\move{e}{6}
+\pass
+\move{c}{5}%
+\end{psgoboard}\\
+(a) First 5 moves (2: black pass).
+&
+(b) Successive moves (7: white pass).
+\end{tabular}
+\caption{Moves on a board}
+\label{fig:9x9:example}
+\end{center}
+\end{figure}
+
+
+\section{Markers}
+
+Empty positions on the board can be marked with the command
+\verb|\markpos|. This command takes three parameters, being, the
+marker, the column, and the row. Available markers and the commands to
+generate them are listed in Table~\ref{tbl:markers}. Each marker is
+illustrated at position~$(B,2)$ on a~$3\times3$ board. Note that the
+label marker command, \verb|\marklb|, takes one argument, being the
+label. It is possible, though not advisable, to add more than one
+marker to an empty position.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|l|l|l|}
+\hline
+Diagram & \psgo{} Command & Description & Example\\
+\hline\hline 
+\raisebox{-0.5\height}{\begin{psgoboard*}[3]\markpos{\markma}{b}{2}\end{psgoboard*}} &
+\commandname{markma}& Cross &
+{\ttfamily\commandname{markpos}\{\commandname{markma}\}\{b\}\{2\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[3]\markpos{\marktr}{b}{2}\end{psgoboard*}} &
+\commandname{marktr}& Triangle &
+{\ttfamily\commandname{markpos}\{\commandname{marktr}\}\{b\}\{2\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[3]\markpos{\markcr}{b}{2}\end{psgoboard*}} &
+\commandname{markcr}& Circle &
+{\ttfamily\commandname{markpos}\{\commandname{markcr}\}\{b\}\{2\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[3]\markpos{\marksq}{b}{2}\end{psgoboard*}} &
+\commandname{marksq}& Open square &
+{\ttfamily\commandname{markpos}\{\commandname{marksq}\}\{b\}\{2\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[3]\markpos{\marklb{A}}{b}{2}\end{psgoboard*}} &
+\commandname{marklb\{\#1}\}& Label &
+{\ttfamily\commandname{markpos}\{\commandname{marklb}\{A\}\}\{b\}\{2\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[3]\markpos{\marksl}{b}{2}\end{psgoboard*}} &
+\commandname{marksl}& Filled square &
+{\ttfamily\commandname{markpos}\{\commandname{marksl}\}\{b\}\{2\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[3]\markpos{\markdd}{b}{2}\end{psgoboard*}} &
+\commandname{markdd}& Hatched lines &
+{\ttfamily\commandname{markpos}\{\commandname{markdd}\}\{b\}\{2\}}\\\hline
+\end{tabular}
+\caption{Markers on empty positions}
+\label{tbl:markers}
+\end{center}
+\end{table}
+
+Stones can be marked too. To this end, the commands \verb|\stone| and
+\verb|\move| take an optional parameter representing the marker of the
+stone.  For example, \verb|\stone[\markma]{black}{b}{4}| puts a black
+stone marked with a cross at
+position~$(B,4)$. Table~\ref{tbl:stone:markers} shows how stones can
+be marked. It is possible, though not advisable, to add more than one
+marker to a stone or to add markers to numbered stones.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|l|l|p{0.5\linewidth}|}
+\hline
+Diagram & \psgo{} Command & Description & Example\\
+\hline\hline 
+\raisebox{-0.5\height}{\begin{psgoboard*}[4]\stone[\markma]{black}{b}{2}\stone[\markma]{white}{c}{3}\end{psgoboard*}} &
+\commandname{markma}& Cross &
+{\ttfamily\commandname{stone}[\commandname{markma}]\{black\}\{b\}\{2\}
+          \commandname{stone}[\commandname{markma}]\{white\}\{c\}\{3\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[4]\stone[\marktr]{black}{b}{2}\stone[\marktr]{white}{c}{3}\end{psgoboard*}} &
+\commandname{marktr}& Triangle &
+{\ttfamily\commandname{stone}[\commandname{marktr}]\{black\}\{b\}\{2\}
+          \commandname{stone}[\commandname{marktr}]\{white\}\{c\}\{3\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[4]\stone[\markcr]{black}{b}{2}\stone[\markcr]{white}{c}{3}\end{psgoboard*}} &
+\commandname{markcr}& Circle &
+{\ttfamily\commandname{stone}[\commandname{markcr}]\{black\}\{b\}\{2\}
+          \commandname{stone}[\commandname{markcr}]\{white\}\{c\}\{3\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[4]\stone[\marksq]{black}{b}{2}\stone[\marksq]{white}{c}{3}\end{psgoboard*}} &
+\commandname{marksq}& Open square &
+{\ttfamily\commandname{stone}[\commandname{marksq}]\{black\}\{b\}\{2\}
+          \commandname{stone}[\commandname{marksq}]\{white\}\{c\}\{3\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[4]\stone[\marklb{A}]{black}{b}{2}\stone[\marklb{B}]{white}{c}{3}\end{psgoboard*}} &
+\commandname{marklb\{\#1}\}& Label &
+{\ttfamily\commandname{stone}[\commandname{marklb}\{A\}]\{black\}\{b\}\{2\}
+          \commandname{stone}[\commandname{marklb}\{B\}]\{white\}\{c\}\{3\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[4]\stone[\marksl]{black}{b}{2}\stone[\marksl]{white}{c}{3}\end{psgoboard*}} &
+\commandname{marksl}& Filled square &
+{\ttfamily\commandname{stone}[\commandname{marksl}]\{black\}\{b\}\{2\}
+          \commandname{stone}[\commandname{marksl}]\{white\}\{c\}\{3\}}\\\hline
+%
+\raisebox{-0.5\height}{\begin{psgoboard*}[4]\stone[\markdd]{black}{b}{2}\stone[\markdd]{white}{c}{3}\end{psgoboard*}} &
+\commandname{markdd}& Hatched lines &
+{\ttfamily\commandname{stone}[\commandname{markdd}]\{black\}\{b\}\{2\}
+          \commandname{stone}[\commandname{markdd}]\{white\}\{c\}\{3\}}\\\hline
+\end{tabular}
+\caption{Markers on stones}
+\label{tbl:stone:markers}
+\end{center}
+\end{table}
+
+\section{Lines and arrows}
+
+In addition to markers, it is possible to add lines and arrows to the
+diagrams. The command \verb|\goline| draws a line and the command
+\verb|\goarrow| draws an arrow. Both commands take four parameters
+indicating the column and the row of the start position and the column
+and the row of the end position. That is, \verb|\goline{a}{1}{c}{5}|
+draws a line from position~$(A,1)$ to position~$(C,5)$ and
+\verb|\goarrow{e}{3}{b}{2}| draws an arrow from position~$(E,3)$ to
+position~$(B,2)$, as illustrated in Figure~\ref{fig:more:features}(a).
+
+
+\section{Partial Boards}
+\label{sec:partial-boards}
+
+It is sometimes desirable to display \emph{partial} go boards. For
+instance, when describing joseki's, displaying a whole board might be
+a waste of space. To this end, there is a variant of the
+\texttt{psgoboard} environment called \texttt{psgopartialboard}. In
+addition to the board size, this environment takes two points on the
+board as parameters. These points define the lower-left and the
+upper-right of a frame on the board. Only the inside
+the frame will be displayed. The coordinates of the points should be
+given as one parameter with syntax
+%
+\begin{center}
+\texttt{($llx$,$lly$)($urx$,$ury$)} 
+\end{center}
+%
+Here, $llx$ is the $x$-coordinate of the lower-left point, $lly$ is
+the $y$-coordinate of the lower-left point, $llx$ is the
+$x$-coordinate of the upper-right point, and $ury$ is the
+$y$-coordinate of the upper-right
+point. Figure~\ref{fig:part:goboards} shows examples of partial go
+boards of different sizes.
+
+\begin{figure}
+\setgounit{0.3cm}
+\begin{center}
+\begin{tabular}[b]{cc}
+\begin{psgopartialboard*}{(1,1)(6,8)}
+\stone{white}{a}{3}
+\stone{black}{f}{4}
+\stone{white}{d}{7}
+\stone{black}{b}{1}
+\end{psgopartialboard*} &
+\begin{psgopartialboard}[9]{(4,2)(9,9)}
+\stone{white}{d}{2}
+\stone{black}{f}{5}
+\stone{white}{j}{8}
+\end{psgopartialboard}\\[2ex]
+\parbox{5.5cm}{\raggedright\small
+               \texttt{\cmd{begin}\{psgopartialboard*\}\%\\
+                 \qquad\{(1,1)(6,8)\}\\
+                 \cmd{stone}\{white\}\{a\}\{3\}\\
+                 \cmd{stone}\{black\}\{f\}\{4\}\\
+                 \cmd{stone}\{white\}\{d\}\{7\}\\
+                 \cmd{end}\{psgopartialboard*\}
+               }}
+& 
+\parbox{5.5cm}{\raggedright\small
+               \texttt{\cmd{begin}\{psgopartialboard\}[9]\%\\
+                 \qquad\{(4,2)(9,9)\}\\
+                 \cmd{stone}\{white\}\{d\}\{2\}\\
+                 \cmd{stone}\{black\}\{f\}\{5\}\\
+                 \cmd{stone}\{white\}\{j\}\{8\}\\
+                 \cmd{end}\{psgopartialboard\}
+               }}\\
+\end{tabular}
+\caption{Partial go boards}
+\label{fig:part:goboards}
+\end{center}
+\end{figure}
+
+Note that if a partial board includes an edge of the board, the
+indices for that edge are printed. On the other hand, if an edge is
+not included, no indices are printed. The current implementation of
+partial boards uses the clipping feature of \textsf{pstricks} to cut
+out part of the board specified by the lower-left and upper-right
+points. That is, the partial board is drawn as a normal board, but by
+using clipping, only part of the board is visible. In particular,
+coordinates of moves and stones should be given as for a normal
+board. An example of a partial go board with stones is given in
+Figure~\ref{fig:partial:ko:configuration}.
+
+\begin{figure}
+
+\begin{center}
+\begin{tabular}{cb{5cm}}
+\begin{psgopartialboard}[9]{(4,1)(9,6)}
+\stone{white}{c}{3}
+\stone{white}{e}{3}
+\stone{white}{d}{2}
+\stone{white}{d}{4}
+\stone{black}{f}{3}
+\stone{black}{e}{2}
+\stone{black}{e}{4}
+\end{psgopartialboard}
+&
+\small\ttfamily
+\cmd{begin}\{psgopartialboard\}[9]\{(4,1)(9,6)\}
+\cmd\{stone\}\{white\}\{c\}\{3\}
+\cmd{stone}\{white\}\{e\}\{3\}
+\cmd{stone}\{white\}\{d\}\{2\}
+\cmd{stone}\{white\}\{d\}\{4\}
+\cmd{stone}\{black\}\{f\}\{3\}
+\cmd{stone}\{black\}\{e\}\{2\}
+\cmd{stone}\{black\}\{e\}\{4\}
+\cmd{end}\{psgopartialboard\}
+\end{tabular}
+
+\caption{Part of the configuration of Figure~\ref{fig:ko:configuration}}
+\label{fig:partial:ko:configuration}
+\end{center}
+
+\end{figure}
+
+
+
+
+
+\section{Stones in text}
+
+In comments on a Go diagram, one often sees graphical representations
+of the stones on the board. Therefore, \psgo{} has facilities to
+include stones in running text. For instance, we can refer to stone
+\stone[4]{black} of Figure~\ref{fig:9x9:example}(a) with the
+command~\verb|\stone[4]{black}|. As can be seen, in running text
+(i.e., outside the \verb|psgoboard| environment), \verb|\stone| takes
+two parameters. The first one is optional and denotes a number or a
+marker to be placed on the stone. The second parameter denotes the
+color of the stone. As another example, here is a list of various stones:
+\stone[\markma]{black}, \stone[\markma]{white},
+\stone[\marktr]{black}, \stone[\marktr]{white},
+\stone[\markcr]{black}, \stone[\markcr]{white},
+\stone[\marksq]{black}, \stone[\marksq]{white},
+\stone[\marklb{A}]{black}, \stone[\marklb{A}]{white},
+\stone[\marksl]{black}, \stone[\marksl]{white},
+\stone[\markdd]{black}, \stone[\markdd]{white}.
+This list was generated by the following code:
+\begin{verbatim}
+\stone[\markma]{black}, \stone[\markma]{white},
+\stone[\marktr]{black}, \stone[\marktr]{white},
+\stone[\markcr]{black}, \stone[\markcr]{white},
+\stone[\marksq]{black}, \stone[\marksq]{white},
+\stone[\marklb{A}]{black}, \stone[\marklb{A}]{white},
+\stone[\marksl]{black}, \stone[\marksl]{white},
+\stone[\markdd]{black}, \stone[\markdd]{white}.
+\end{verbatim}
+
+
+It is possible to attach ordinary \LaTeX{} labels to \emph{moves}
+on a board. For instance, the digram of Figure~\ref{fig:more:features}(b) was
+generated by the following code:
+
+\begin{verbatim}
+\begin{psgoboard}[5]
+\move{b}{2}
+\move{d}{3}\label{go:move}
+\move{d}{1}
+\end{psgoboard}
+\end{verbatim}
+As can be seen, a label \verb|{funny:go:move}| is defined after the
+second move. To refer in the text to this move, the ordinary \LaTeX{}
+\verb|\ref| command can be used. In this case, we type
+\verb|\stone[\ref{go:move}]{white}|, which results in the
+stone~\stone[\ref{go:move}]{white}, as expected. Of course, the
+color should still be defined manually.
+
+\begin{figure}
+\begin{center}
+
+\begin{tabular}{cc}
+\begin{psgoboard}[5]
+\goline{a}{1}{c}{5}
+\goarrow{e}{3}{b}{2}
+\end{psgoboard}
+&
+\setcounter{gomove}{-1}
+\begin{psgoboard}[5]
+\move{b}{2}
+\move{d}{3}\label{go:move}
+\move{d}{1}
+\end{psgoboard}\\
+(a) Lines and arrows &
+(b) Labeling stones
+\end{tabular}
+
+\caption{More \psgo{} features: lines, arrows, and labels}
+\label{fig:more:features}
+\end{center}
+\end{figure}
+
+\section{Remarks, limitations, and known bugs}
+
+\begin{enumerate}
+
+\item The \verb|\pass| moves cannot be labels with \verb|\label|.
+
+\item Version 0.15 fixes the stones-on-the-edge problem introduced in
+  versions 13 and~14.
+
+\item The \verb|\pass| command was requested by Markus Enzenberger
+  (16.09.2003). It was implemented at 01.10.2003. For convenience,
+  there is also a \verb|\pass*| command. Like \verb|\move*|,
+  \verb|\pass*| is useful for copy\&pasting moves and passes from
+  previous boards. See Figure~\ref{fig:9x9:example} for an example.
+
+\item Lukas van de Wiel requested a possibility to generare partial
+go-boards (27.09.2003). This was implemented in the
+\texttt{psgopartialboard(*)} environments (see
+Section~\ref{sec:partial-boards}) using the clipping features of
+\textsf{pstricks}.
+
+\item Xiaozhen Niu discovered a bug in partial go-boards (20.2.2004):
+stones on the edge were not displayed completely if there are no
+indices at that edge. This was fixed by setting the \verb+xoffset+ and
+\verb+yoffset+ to .5\verb+\goxunit+ and .5\verb+goyunit+,
+respectively.
+
+
+\end{enumerate}
+
+\end{document}

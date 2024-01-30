@@ -1,0 +1,4 @@
+psgo.sty -----------------------------------
+0.17  2008-09-04  - do not load pstcol, it is obsolet (hv)
+                  - add a pdf documentation
+0.16  2004-02-24  initial CTAN version
