@@ -2,9 +2,9 @@
 
 There are 3 main alternatives to doing this:
 
-- [psgo](https://www.ctan.org/tex-archive/graphics/pstricks/contrib/psgo/)
-- [igo](https://www.ctan.org/tex-archive/fonts/igo)
-- Creating a new Package with TikZ
+- [ ] [psgo](https://www.ctan.org/tex-archive/graphics/pstricks/contrib/psgo/)
+- [ ] [igo](https://www.ctan.org/tex-archive/fonts/igo)
+- [ ] Creating a new Package with TikZ
   - TikZ also offers a way of making this interactive, so we could achieve the same level of interactivity as [GoBooks](https://gobooks.com/)' EPUBs.
 
 ## References
