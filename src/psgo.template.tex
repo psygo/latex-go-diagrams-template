@@ -1,14 +1,28 @@
 \documentclass{article}
 
-\usepackage{pstricks}
-\usepackage{pst-node}
-\usepackage{calc}
-\usepackage{ifthen}
-\usepackage{auto-pst-pdf}
 \usepackage{psgo}
 
 \begin{document}
-    \begin{psgoboard}[9]
-        \stone{black}{q}{16}
-    \end{psgoboard}
+
+\begin{figure}[!thbp]
+  \setcounter{gomove}{0}
+  \setgounit{0.3cm}
+
+  \tiny{
+    \begin{center}
+      \begin{psgoboard}[19]
+        \move{b}{2}
+        \move{c}{3}
+        \move{d}{4}
+        \move{e}{5}
+        \move{f}{6}
+        \move{g}{7}
+        \move{h}{8}
+        \move{j}{9}
+      \end{psgoboard}
+      \caption{Lee Sedol vs AlphaGoZero - Game2 (“Invention”)}\label{Figure:LS-vs-AG-Game2}
+    \end{center}
+  }
+\end{figure}
+
 \end{document}

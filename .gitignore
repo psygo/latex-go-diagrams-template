@@ -1,1 +1,8 @@
-dist/
+dist*/
+
+# LaTeX Stuff
+
+*.aux
+*.dvi
+*.log
+*.ps
