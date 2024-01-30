@@ -7,6 +7,8 @@ There are 3 main alternatives to doing this:
 - [ ] Creating a new Package with TikZ
   - TikZ also offers a way of making this interactive, so we could achieve the same level of interactivity as [GoBooks](https://gobooks.com/)' EPUBs.
 
+> An honorable mention is [GoWrite2](https://gowrite.net/GOWrite2.html), which is what I've used in the past to create the diagrams in [this book translation](https://github.com/FanaroEngineering/traducao_como_jogar_go).
+
 ## Development Setup
 
 > I'm using the [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) VS Code Extension.
@@ -27,3 +29,5 @@ There are 3 main alternatives to doing this:
 - Others
   - [GoBooks](https://gobooks.com/)
   - [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
+  - [GoWrite2](https://gowrite.net/GOWrite2.html)
+  - [Como Jogar Go (Book Translation)](https://github.com/FanaroEngineering/traducao_como_jogar_go)
