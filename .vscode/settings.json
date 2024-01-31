@@ -1,5 +1,23 @@
 {
     "latex-workshop.latex.outDir": "../dist/",
+    "latex-workshop.latex.tools": [
+        {
+            "name": "psgo-latex",
+            "command": "bash",
+            "args": [
+                "../scripts/psgo.sh"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "psgo-latex",
+            "tools": [
+                "psgo-latex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "psgo-latex",
     "files.exclude": {
         "**/*.aux": true,
         "**/*.dvi": true,
