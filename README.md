@@ -2,7 +2,7 @@
 
 There are 3 main alternatives to doing this:
 
-- [ ] [psgo](https://www.ctan.org/tex-archive/graphics/pstricks/contrib/psgo/)
+- [x] [psgo](https://www.ctan.org/tex-archive/graphics/pstricks/contrib/psgo/)
   - On my M2 Mac 2023, things don't seem to compile consistently with the 20+ years old documentation. The stones overlap a bit, and they seem to have somewhat pixelated borders.
 - [ ] [igo](https://www.ctan.org/tex-archive/fonts/igo)
 - [ ] Creating a new Package with TikZ
