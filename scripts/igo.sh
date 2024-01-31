@@ -7,4 +7,4 @@ DIST="dist_igo"
 
 mkdir -p $DIST
 
-latex  -output-directory $DIST ./src/$NAME.tex
+latex -output-directory $DIST ./src/$NAME.tex

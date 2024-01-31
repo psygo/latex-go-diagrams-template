@@ -6,3 +6,5 @@ dist*/
 *.dvi
 *.log
 *.ps
+*.fls
+*.fdb_latexmk
