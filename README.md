@@ -8,6 +8,11 @@ There are 3 main alternatives to doing this:
   - Apparently, not only is `igo` difficult to install, but also [kind of dangerous to LaTeX itself](https://tex.stackexchange.com/a/652011/64441).
 - [ ] Creating a new Package with TikZ
   - TikZ also offers a way of making this interactive, so we could achieve the same level of interactivity as [GoBooks](https://gobooks.com/)' EPUBs.
+  - Desired Features:
+    - [ ] Different board sizes (grid and size itself)
+    - [ ] Drawing Stones
+    - [ ] Drawing Moves (with numbers)
+    - [ ] Partial Boards
 
 > An honorable mention is [GoWrite2](https://gowrite.net/GOWrite2.html), which is what I've used in the past to create the diagrams in [this book translation](https://github.com/FanaroEngineering/traducao_como_jogar_go).
 

@@ -2,6 +2,11 @@
 
 \usepackage{tikz}
 
+\usepackage{xifthen}
+\newcommand{\ifequals}[3]{\ifthenelse{\equal{#1}{#2}}{#3}{}}
+\newcommand{\case}[2]{#1 #2} % Dummy, so \renewcommand has something to overwrite...
+\newenvironment{switch}[1]{\renewcommand{\case}{\ifequals{#1}}}{}
+
 %-----------------------------------------------------------
 % Grid
 
@@ -16,25 +21,37 @@
 
 \newcommand{\boardoutline}[1]{
   % Top Horizontal
-  \draw[black,line width=1]
+  \draw[black, line width = 1]
     (0, #1) -- (\dimexpr #1cm + 0.01cm, #1); % chktex 1 chktex 8
   % Right Vertical
-  \draw[black,line width=1] 
+  \draw[black, line width = 1] 
     (#1, 0) -- (#1, #1); % chktex 8
   % Bottom Horizontal
-  \draw[black,line width=1]
+  \draw[black, line width = 1]
     (0, 0) -- (\dimexpr #1cm + 0.01cm, 0); % chktex 1 chktex 8
   % Left Vertical
-  \draw[black,line width=1]
+  \draw[black, line width = 1]
     (0, 0) -- (0, #1); % chktex 8
 }
 
 %-----------------------------------------------------------
 % Stones
 
-% \newcommand{stone}[1]{
-  
-% }
+\newcommand{\drawstone}[3]{
+  \begin{switch}{#1}
+    \case{black}{
+      \draw[draw = white, line width = 0.1mm, fill = black]
+        (#2, #3) circle [radius = 0.2575cm]; % chktex 1
+    }
+    \case{white}{
+      \draw[draw = black, line width = 0.1mm, fill = white]
+        (#2, #3) circle [radius = 0.25cm]; % chktex 1
+    }
+  \end{switch}
+  % \if\#1\black
+  % \else
+  % \fi
+}
 
 %-----------------------------------------------------------
 
@@ -43,8 +60,8 @@
     \begin{center}
       \begin{tikzpicture}
         \gogrid[10]
-        \filldraw (0,0) circle [radius=7.48756pt] node[below=0.5cm] {\the\size};
-        \filldraw (5,5) circle[radius=3pt];
+        \drawstone{white}{2 * 10cm / 18}{3 * 10cm / 18}
+        \drawstone{black}{3 * 10cm / 18}{3 * 10cm / 18}
       \end{tikzpicture}
       \caption{Another grid with two points!}\label{my_grid2}
     \end{center}
