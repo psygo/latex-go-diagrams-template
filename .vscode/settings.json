@@ -2,7 +2,10 @@
     //------------------------------------------------------
     // 1. LaTeX Workshop
     "latex-workshop.latex.outDir": "../dist/",
+
     // Use what's below for the igo or psgo package
+    // igo doesn't seem to be working though
+
     // "latex-workshop.latex.tools": [
     //     {
     //         "name": "psgo-latex",
