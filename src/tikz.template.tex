@@ -7,22 +7,26 @@
 
 \newlength{\size}
 \newcommand{\gogrid}[1][1]{
-  \setlength{\size}{\dimexpr#1cm/18\relax}
+  \setlength{\size}{\dimexpr #1cm / 18 \relax} % chktex 1
 
-  \draw[step=\size] (0, 0) grid (#1,#1);
+  \draw[step=\size] (0, 0) grid (#1, #1);
   
   \boardoutline{#1}
 }
 
 \newcommand{\boardoutline}[1]{
   % Top Horizontal
-  \draw[black,line width=1] (0, #1) -- (\dimexpr#1cm+0.01cm, #1); % chktex 8
+  \draw[black,line width=1]
+    (0, #1) -- (\dimexpr #1cm + 0.01cm, #1); % chktex 1 chktex 8
   % Right Vertical
-  \draw[black,line width=1] (#1, 0) -- (#1, #1); % chktex 8
+  \draw[black,line width=1] 
+    (#1, 0) -- (#1, #1); % chktex 8
   % Bottom Horizontal
-  \draw[black,line width=1] (0, 0) -- (\dimexpr#1cm+0.01cm, 0); % chktex 8
+  \draw[black,line width=1]
+    (0, 0) -- (\dimexpr #1cm + 0.01cm, 0); % chktex 1 chktex 8
   % Left Vertical
-  \draw[black,line width=1] (0, 0) -- (0, #1); % chktex 8
+  \draw[black,line width=1]
+    (0, 0) -- (0, #1); % chktex 8
 }
 
 %-----------------------------------------------------------
