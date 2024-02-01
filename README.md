@@ -15,8 +15,9 @@ There are 3 main alternatives to doing this:
 
 > I'm using the [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) VS Code Extension.
 
-- I'm not sure, but apparently `psgo` comes with TeX Live.
-- Use the `scripts` folder to compile the `.tex` files.
+- I'm not sure, but apparently `psgo` comes with TeX Live (_not true_, so I don't know how I'm able to use `\usepackage{psgo}` directly).
+- I'm using the [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) VS Code Extension.
+  - The files inside the `scripts` folder are tailored for working with it.
 
 ## References
 
