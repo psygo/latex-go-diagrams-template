@@ -7,6 +7,9 @@
   \setlength{\size}{\dimexpr#1cm/19\relax}
 
   \draw[step=\size] (-#1, -#1) grid (#1,#1);
+  
+  % Outer Board Bold Grid Lines
+  % TODO: create new macro
   \draw[red,line width=1] (-#1, #1) -- (\dimexpr#1cm+1cm, #1);  % chktex 8
   \draw[blue,line width=1] (#1, -#1) -- (#1, #1);  % chktex 8
 }
