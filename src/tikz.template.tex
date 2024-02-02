@@ -2,10 +2,24 @@
 
 \usepackage{tikz}
 
-\usepackage{xifthen}
-\newcommand{\ifequals}[3]{\ifthenelse{\equal{#1}{#2}}{#3}{}}
-\newcommand{\case}[2]{#1 #2} % Dummy, so \renewcommand has something to overwrite...
-\newenvironment{switch}[1]{\renewcommand{\case}{\ifequals{#1}}}{}
+%-----------------------------------------------------------
+% Switch Statement
+
+% From [this TeX Stack Exchange answer](https://tex.stackexchange.com/a/187710/64441).
+\usepackage{ifthen}
+
+\newcommand{\ifequals}[3]{
+  \ifthenelse{\equal{#1}{#2}}{#3}{}
+}
+
+% Dummy stuff, so \renewcommand has something to overwrite...
+\newcommand{\case}[2]{
+  #1 #2
+} 
+
+\newenvironment{switch}[1]{
+  \renewcommand{\case}{\ifequals{#1}}
+}{}
 
 %-----------------------------------------------------------
 % Grid
@@ -44,13 +58,10 @@
         (#2, #3) circle [radius = 0.2575cm]; % chktex 1
     }
     \case{white}{
-      \draw[draw = black, line width = 0.1mm, fill = white]
-        (#2, #3) circle [radius = 0.25cm]; % chktex 1
+      \draw[draw = black, line width = 0.1mm, fill = white, smooth]
+        (#2, #3) circle [smooth, radius = 0.25cm]; % chktex 1
     }
   \end{switch}
-  % \if\#1\black
-  % \else
-  % \fi
 }
 
 %-----------------------------------------------------------
