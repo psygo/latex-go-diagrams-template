@@ -64,6 +64,33 @@
   \end{switch}
 }
 
+\newcounter{movecounter}
+\setcounter{movecounter}{1}
+\newcommand{\drawmove}[3]{
+  \begin{switch}{#1}
+    % TODO: Change fontsize if the number goes beyond 99.
+    \case{black}{
+      \draw[draw = white, line width = 0.1mm, fill = black]
+        (#2, #3) circle [radius = 0.2575cm] % chktex 1
+        node[color = white] {\themovecounter};
+    }
+    \case{white}{
+      \draw[draw = black, line width = 0.1mm, fill = white, smooth]
+        (#2, #3) circle [smooth, radius = 0.25cm] % chktex 1
+        node {\themovecounter};
+    }
+    \stepcounter{movecounter}
+  \end{switch}
+}
+
+\newenvironment{goban}{
+  \begin{tikzpicture}
+    \gogrid[10]
+}{
+    \setcounter{movecounter}{1}
+  \end{tikzpicture}
+}
+
 %-----------------------------------------------------------
 
 \begin{document}
@@ -74,7 +101,27 @@
         \drawstone{white}{2 * 10cm / 18}{3 * 10cm / 18}
         \drawstone{black}{3 * 10cm / 18}{3 * 10cm / 18}
       \end{tikzpicture}
-      \caption{Another grid with two points!}\label{my_grid2}
+      \caption{Goban 1}\label{my_grid1}
+    \end{center}
+  \end{figure}
+
+  \begin{figure}[ht]
+    \begin{center}
+      \begin{goban}
+        \drawmove{white}{2 * 10cm / 18}{3 * 10cm / 18}
+        \drawmove{black}{3 * 10cm / 18}{3 * 10cm / 18}
+      \end{goban}
+      \caption{Goban 2}\label{my_grid2}
+    \end{center}
+  \end{figure}
+
+  \begin{figure}[ht]
+    \begin{center}
+      \begin{goban}
+        \drawmove{white}{2 * 10cm / 18}{3 * 10cm / 18}
+        \drawmove{black}{3 * 10cm / 18}{3 * 10cm / 18}
+      \end{goban}
+      \caption{Goban 3}\label{my_grid3}
     \end{center}
   \end{figure}
 \end{document}
