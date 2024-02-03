@@ -35,6 +35,8 @@ There are 3 main alternatives to doing this:
   - `igo`
     - [How to Use (Install) the igo (CTAN) Package](https://tex.stackexchange.com/q/708390/64441)
     - [igo overrides basic TeX behavior is dangerous to your install](https://tex.stackexchange.com/a/652011/64441)
+    - Others
+      - [How to Create an Interactive Diagram with TikZ](https://tex.stackexchange.com/q/708625/64441)
 - Reddit:
   - [psgo: Go diagrams for LaTex](https://www.reddit.com/r/baduk/comments/2kkaki/psgo_go_diagrams_for_latex/?utm_source=share&utm_medium=web2x&context=3)
 - Others
