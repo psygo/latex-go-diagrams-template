@@ -40,14 +40,26 @@
 \newcommand{\coordinates}[1]{
   \foreach [count=\i] \l in {A, B, ..., T} {
     \ifthenelse{\equal{\l}{I}}{}{
+      % Top
       \draw[
-        xshift=-0.5cm,
-        yshift=(\thecoordinatecounter - 1) * 0.555cm,
+        xshift = (\thecoordinatecounter - 1) * 0.555cm,
+        yshift = #1cm + 0.45cm,
       ] node {\l};
+      % Right
       \draw[
-        xshift=(\thecoordinatecounter - 1) * 0.555cm,
-        yshift=#1cm + 0.5cm,
-      ] node {\i };
+        xshift = #1cm + 0.45cm,
+        yshift = (\thecoordinatecounter - 1) * 0.555cm,
+      ] node {\thecoordinatecounter};
+      % Bottom
+      \draw[
+        xshift = (\thecoordinatecounter - 1) * 0.555cm,
+        yshift = -0.45cm,
+      ] node {\l};
+      % Left
+      \draw[
+        xshift = -0.5cm,
+        yshift = (\thecoordinatecounter - 1) * 0.555cm,
+      ] node {\thecoordinatecounter};
 
       \stepcounter{coordinatecounter}
     }
@@ -56,16 +68,16 @@
 }
 
 \newcommand{\boardoutline}[1]{
-  % Top Horizontal
+  % Top
   \draw[black, line width = 1]
     (0, #1) -- (\dimexpr #1cm + 0.01cm, #1); % chktex 1 chktex 8
-  % Right Vertical
+  % Right
   \draw[black, line width = 1] 
     (#1, 0) -- (#1, #1); % chktex 8
-  % Bottom Horizontal
+  % Bottom
   \draw[black, line width = 1]
     (0, 0) -- (\dimexpr #1cm + 0.01cm, 0); % chktex 1 chktex 8
-  % Left Vertical
+  % Left
   \draw[black, line width = 1]
     (0, 0) -- (0, #1); % chktex 8
 }
