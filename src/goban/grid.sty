@@ -1,8 +1,8 @@
-\newlength{\size}
+\newlength{\step}
 \newcommand{\gogrid}[1][1]{
-  \setlength{\size}{\dimexpr #1cm / 18 \relax} % chktex 1
+  \setlength{\step}{\dimexpr #1cm / 18 \relax} % chktex 1
 
-  \draw[step=\size] (0, 0) grid (#1, #1);
+  \draw[step=\step] (0, 0) grid (#1, #1);
   
   \boardoutline{#1}
   
