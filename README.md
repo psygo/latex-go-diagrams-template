@@ -21,6 +21,7 @@ There are 3 main alternatives to doing this:
 - I'm not sure, but apparently `psgo` comes with TeX Live (_not true_, so I don't know how I'm able to use `\usepackage{psgo}` directly).
 - I'm using the [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) VS Code Extension.
   - The files inside the `scripts` folder are tailored for working with it.
+- VS Code's PDF viewer is kind of weird. TikZ _does_ create scalar vector graphics, but the images are shown as pixelated, which is something that doesn't happen with the same file when viewed with other PDF viewers.
 
 ## References
 
