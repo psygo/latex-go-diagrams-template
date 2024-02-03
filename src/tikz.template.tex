@@ -31,6 +31,28 @@
   \draw[step=\size] (0, 0) grid (#1, #1);
   
   \boardoutline{#1}
+  
+  \coordinates{#1} % chktex 1
+}
+
+\newcounter{coordinatecounter}
+\setcounter{coordinatecounter}{1}
+\newcommand{\coordinates}[1]{
+  \foreach [count=\i] \l in {A, B, ..., T} {
+    \ifthenelse{\equal{\l}{I}}{}{
+      \draw[
+        xshift=-0.5cm,
+        yshift=(\thecoordinatecounter - 1) * 0.555cm,
+      ] node {\l};
+      \draw[
+        xshift=(\thecoordinatecounter - 1) * 0.555cm,
+        yshift=#1cm + 0.5cm,
+      ] node {\i };
+
+      \stepcounter{coordinatecounter}
+    }
+  }
+  \setcounter{coordinatecounter}{0}
 }
 
 \newcommand{\boardoutline}[1]{
