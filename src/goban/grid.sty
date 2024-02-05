@@ -5,64 +5,64 @@
 % 2: board size (square)
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\gogrid{10}{19}'
-\newcommand{\gogrid}[2]{
+\newcommand{\goGrid}[2]{
   \setlength{\step}{\dimexpr #1cm / (#2 - 1) \relax} % chktex 1
 
   \draw[step=\step] (0, 0) grid (#1, #1);
   
-  \board@outline{#1}
+  \boardOutline{#1}
   
-  % \coordinates{#1} % chktex 1
+  \coordinates{#1} % chktex 1
 }
 
-\newlength{\board@outline@line@width}
-\newcommand{\board@outline}[1]{
+\newlength{\boardOutlineLineWidth}
+\newcommand{\boardOutline}[1]{
   % Just so the board outline isn't jagged
-  \setlength{\board@outline@line@width}{\dimexpr #1cm * 5 / 1000 \relax}
+  \setlength{\boardOutlineLineWidth}{\dimexpr #1cm * 5 / 1000 \relax}
 
   % Top
-  \draw[black, line width = \board@outline@line@width]
-    (-\board@outline@line@width / 2, #1) -- (\dimexpr #1cm + \board@outline@line@width / 2, #1); % chktex 1 chktex 8
+  \draw[black, line width = \boardOutlineLineWidth]
+    (-\boardOutlineLineWidth / 2, #1) -- (\dimexpr #1cm + \boardOutlineLineWidth / 2, #1); % chktex 1 chktex 8
   % Right
-  \draw[black, line width = \board@outline@line@width] 
+  \draw[black, line width = \boardOutlineLineWidth] 
     (#1, 0) -- (#1, #1); % chktex 8
   % Bottom
-  \draw[black, line width = \board@outline@line@width]
-    (-\board@outline@line@width / 2, 0) -- (\dimexpr #1cm + \board@outline@line@width / 2, 0); % chktex 1 chktex 8
+  \draw[black, line width = \boardOutlineLineWidth]
+    (-\boardOutlineLineWidth / 2, 0) -- (\dimexpr #1cm + \boardOutlineLineWidth / 2, 0); % chktex 1 chktex 8
   % Left
-  \draw[black, line width = \board@outline@line@width]
+  \draw[black, line width = \boardOutlineLineWidth]
     (0, 0) -- (0, #1); % chktex 8
 }
 
-\newcounter{coordinatecounter}
-\setcounter{coordinatecounter}{1}
+\newcounter{coordinateCounter}
+\setcounter{coordinateCounter}{1}
 \newcommand{\coordinates}[1]{
   \foreach [count=\i] \l in {A, B, ..., T} {
     \ifthenelse{\equal{\l}{I}}{}{
       % Top
       \draw[
-        xshift = (\thecoordinatecounter - 1) * 0.555cm,
+        xshift = (\thecoordinateCounter - 1) * 0.555cm,
         yshift = #1cm + 0.45cm,
       ] node {\l};
       % Right
       \draw[
         xshift = #1cm + 0.45cm,
-        yshift = (\thecoordinatecounter - 1) * 0.555cm,
-      ] node {\thecoordinatecounter};
+        yshift = (\thecoordinateCounter - 1) * 0.555cm,
+      ] node {\thecoordinateCounter};
       % Bottom
       \draw[
-        xshift = (\thecoordinatecounter - 1) * 0.555cm,
+        xshift = (\thecoordinateCounter - 1) * 0.555cm,
         yshift = -0.45cm,
       ] node {\l};
       % Left
       \draw[
         xshift = -0.5cm,
-        yshift = (\thecoordinatecounter - 1) * 0.555cm,
-      ] node {\thecoordinatecounter};
+        yshift = (\thecoordinateCounter - 1) * 0.555cm,
+      ] node {\thecoordinateCounter};
 
-      \stepcounter{coordinatecounter}
+      \stepcounter{coordinateCounter}
     }
   }
-  \setcounter{coordinatecounter}{1}
+  \setcounter{coordinateCounter}{1}
 }
 
