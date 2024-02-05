@@ -16,19 +16,21 @@
 }
 
 \newlength{\boardOutlineLineWidth}
+\newlength{\boardOutlinePadding}
 \newcommand{\boardOutline}[1]{
-  % Just so the board outline isn't jagged
   \setlength{\boardOutlineLineWidth}{\dimexpr #1cm * 5 / 1000 \relax}
+  % Just so the board outline isn't jagged
+  \setlength{\boardOutlinePadding}{\dimexpr \boardOutlineLineWidth / 2 \relax}
 
   % Top
   \draw[black, line width = \boardOutlineLineWidth]
-    (-\boardOutlineLineWidth / 2, #1) -- (\dimexpr #1cm + \boardOutlineLineWidth / 2, #1); % chktex 1 chktex 8
+    (-\boardOutlinePadding, #1) -- (\dimexpr #1cm + \boardOutlinePadding, #1); % chktex 1 chktex 8
   % Right
   \draw[black, line width = \boardOutlineLineWidth] 
     (#1, 0) -- (#1, #1); % chktex 8
   % Bottom
   \draw[black, line width = \boardOutlineLineWidth]
-    (-\boardOutlineLineWidth / 2, 0) -- (\dimexpr #1cm + \boardOutlineLineWidth / 2, 0); % chktex 1 chktex 8
+    (-\boardOutlinePadding, 0) -- (\dimexpr #1cm + \boardOutlinePadding, 0); % chktex 1 chktex 8
   % Left
   \draw[black, line width = \boardOutlineLineWidth]
     (0, 0) -- (0, #1); % chktex 8
