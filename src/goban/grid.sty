@@ -1,7 +1,7 @@
 \newlength{\step}
 % Parameters
 %
-% 1: dimension
+% 1: dimension (in cm)
 % 2: board size (square)
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\gogrid{10}{19}'
@@ -12,11 +12,16 @@
   
   \boardOutline{#1}
   
-  \coordinates{#1} % chktex 1
+  \coordinates{#1}{#2}{\step} % chktex 1
 }
 
 \newlength{\boardOutlineLineWidth}
 \newlength{\boardOutlinePadding}
+% Parameters
+%
+% 1: dimension (in cm)
+% 
+% Example: \boardOutline{10}
 \newcommand{\boardOutline}[1]{
   \setlength{\boardOutlineLineWidth}{\dimexpr #1cm * 5 / 1000 \relax}
   % Just so the board outline isn't jagged
@@ -38,28 +43,41 @@
 
 \newcounter{coordinateCounter}
 \setcounter{coordinateCounter}{1}
-\newcommand{\coordinates}[1]{
-  \foreach [count=\i] \l in {A, B, ..., T} {
-    \ifthenelse{\equal{\l}{I}}{}{
+\newlength{\coordinateShift}
+\newlength{\leftRightShift}
+% Parameters
+%
+% 1: dimension (in cm)
+% 2: board size (square)
+% 3: step
+% 
+% Example: A 19x19 board with size 10cm x 10cm: `\coordinates{10}{19}'
+\newcommand{\coordinates}[3]{
+  % \setlength{\leftRightShift}{\dimexpr #3 / 1.3 \relax}
+
+  \foreach [count=\i] \l in {A, B, ..., Z} {
+    \ifthenelse{\equal{\l}{I} \OR \i > \numexpr #2 + 1 \relax}{}{
+      \setlength{\coordinateShift}{\dimexpr #3 * (\thecoordinateCounter - 1) \relax}
+
       % Top
       \draw[
-        xshift = (\thecoordinateCounter - 1) * 0.555cm,
-        yshift = #1cm + 0.45cm,
+        xshift = \coordinateShift,
+        yshift = #1cm + #3 / 1.5,
       ] node {\l};
       % Right
       \draw[
-        xshift = #1cm + 0.45cm,
-        yshift = (\thecoordinateCounter - 1) * 0.555cm,
+        xshift = #1cm + #3 / 1.3,
+        yshift = \coordinateShift,
       ] node {\thecoordinateCounter};
       % Bottom
       \draw[
-        xshift = (\thecoordinateCounter - 1) * 0.555cm,
-        yshift = -0.45cm,
+        xshift = \coordinateShift,
+        yshift = -(#3 / 1.5),
       ] node {\l};
       % Left
       \draw[
-        xshift = -0.5cm,
-        yshift = (\thecoordinateCounter - 1) * 0.555cm,
+        xshift = -(#3 / 1.3),
+        yshift = \coordinateShift,
       ] node {\thecoordinateCounter};
 
       \stepcounter{coordinateCounter}
