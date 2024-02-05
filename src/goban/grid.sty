@@ -45,6 +45,7 @@
 \setcounter{coordinateCounter}{1}
 \newlength{\coordinateShift}
 \newlength{\leftRightShift}
+\newlength{\topBottomShift}
 % Parameters
 %
 % 1: dimension (in cm)
@@ -53,7 +54,9 @@
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\coordinates{10}{19}'
 \newcommand{\coordinates}[3]{
-  % \setlength{\leftRightShift}{\dimexpr #3 / 1.3 \relax}
+  % For some reason, TeX doesn't like dividin by non-integers?
+  \setlength{\leftRightShift}{\dimexpr #3 * 10 / 14 \relax}
+  \setlength{\topBottomShift}{\dimexpr #3 * 10 / 15 \relax}
 
   \foreach [count=\i] \l in {A, B, ..., Z} {
     \ifthenelse{\equal{\l}{I} \OR \i > \numexpr #2 + 1 \relax}{}{
@@ -62,21 +65,21 @@
       % Top
       \draw[
         xshift = \coordinateShift,
-        yshift = #1cm + #3 / 1.5,
+        yshift = #1cm + \topBottomShift,
       ] node {\l};
       % Right
       \draw[
-        xshift = #1cm + #3 / 1.3,
+        xshift = #1cm + \leftRightShift,
         yshift = \coordinateShift,
       ] node {\thecoordinateCounter};
       % Bottom
       \draw[
         xshift = \coordinateShift,
-        yshift = -(#3 / 1.5),
+        yshift = -(\leftRightShift),
       ] node {\l};
       % Left
       \draw[
-        xshift = -(#3 / 1.3),
+        xshift = -(\leftRightShift),
         yshift = \coordinateShift,
       ] node {\thecoordinateCounter};
 
@@ -85,4 +88,3 @@
   }
   \setcounter{coordinateCounter}{1}
 }
-
