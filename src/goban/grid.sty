@@ -11,7 +11,7 @@
   
   \boardOutline{#1}
   
-  % \coordinates{#1}{#2}{\step} % chktex 1
+  \coordinates{#1}{#2}{\step} % chktex 1
   
   \drawHoshis{#1}{#2}{\step}
 }
@@ -61,9 +61,6 @@
 
 \newcounter{coordinateCounter}
 \setcounter{coordinateCounter}{1}
-\newlength{\coordinateShift}
-\newlength{\leftRightShift}
-\newlength{\topBottomShift}
 % Parameters
 %
 % 1: dimension (in cm)
@@ -72,13 +69,12 @@
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\coordinates{10}{19}{\step}'
 \newcommand{\coordinates}[3]{
-  % For some reason, TeX doesn't like dividin by non-integers?
-  \setlength{\leftRightShift}{\dimexpr #3 * 10 / 14 \relax}
-  \setlength{\topBottomShift}{\dimexpr #3 * 10 / 15 \relax}
+  \pgfmathsetmacro{\leftRightShift}{#3cm / 1.4}
+  \pgfmathsetmacro{\topBottomShift}{#3cm / 1.5}
 
   \foreach [count=\i] \l in {A, B, ..., Z} {
     \ifthenelse{\equal{\l}{I} \OR \i > \numexpr #2 + 1 \relax}{}{
-      \setlength{\coordinateShift}{\dimexpr #3 * (\thecoordinateCounter - 1) \relax}
+      \pgfmathsetmacro{\coordinateShift}{#3cm * (\thecoordinateCounter - 1)}
 
       % Top
       \draw[

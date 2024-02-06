@@ -1,32 +1,38 @@
-\newcommand{\drawstone}[3]{
+\newcommand{\drawBlackStone}[2]{
+  \draw[draw = white, fill = black, line width = 0.1mm]
+    (#1, #2) circle [radius = 0.2575cm] % chktex 1
+}
+\newcommand{\drawWhiteStone}[2]{
+  \draw[draw = black, fill = white, line width = 0.1mm]
+    (#1, #2) circle [smooth, radius = 0.25cm] % chktex 1
+}
+
+\newcommand{\drawStone}[3]{
   \begin{switch}{#1}
     \case{black}{
-      \draw[draw = white, fill = black, line width = 0.1mm]
-        (#2, #3) circle [radius = 0.2575cm]; % chktex 1
+      \drawBlackStone{#2}{#3};
     }
     \case{white}{
-      \draw[draw = black, fill = white, line width = 0.1mm]
-        (#2, #3) circle [smooth, radius = 0.25cm]; % chktex 1
+      \drawWhiteStone{#2}{#3};
     }
   \end{switch}
 }
 
-\newcounter{movecounter}
-\setcounter{movecounter}{1}
-\newcommand{\drawmove}[3]{
+\newcounter{moveCounter}
+\setcounter{moveCounter}{1}
+\newcommand{\drawMove}[3]{
   \begin{switch}{#1}
     % TODO: Change fontsize if the number goes beyond 99.
     \case{black}{
-      \draw[draw = white, fill = black, line width = 0.1mm]
-        (#2, #3) circle [radius = 0.2575cm] % chktex 1
-        node[color = white] {\themovecounter};
+      \drawBlackStone{#2}{#3}
+        node[color = white] {\themoveCounter};
     }
     \case{white}{
-      \draw[draw = black, fill = white, line width = 0.1mm]
-        (#2, #3) circle [smooth, radius = 0.25cm] % chktex 1
-        node {\themovecounter};
+      \drawWhiteStone{#2}{#3}
+        node {\themoveCounter};
     }
-    \stepcounter{movecounter}
+
+    \stepcounter{moveCounter}
   \end{switch}
 }
 
