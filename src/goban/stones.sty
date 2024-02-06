@@ -1,45 +1,35 @@
-\newcommand{\drawBlackStone}[2]{
-  \draw[draw = white, fill = black, line width = 0.1mm]
-    (#1, #2) circle [radius = 0.2575cm] % chktex 1
-}
-\newcommand{\drawWhiteStone}[2]{
-  \draw[draw = black, fill = white, line width = 0.1mm]
-    (#1, #2) circle [smooth, radius = 0.25cm] % chktex 1
+\ExplSyntaxOn
+  \cs_new_eq:NN \myIfStrEqTF \str_if_eq:nnTF
+\ExplSyntaxOff
+
+\newcommand{\drawStoneRaw}[3]{
+  % TODO: Change fontsize if the number goes beyond 99.
+  \draw[
+    draw = \myIfStrEqTF{black}{#1}{white}{black},
+    fill = #1, 
+    line width = 0.1mm
+  ]
+    (#2, #3) circle [radius = 0.25cm]
 }
 
 \newcommand{\drawStone}[3]{
-  \begin{switch}{#1}
-    \case{black}{
-      \drawBlackStone{#2}{#3};
-    }
-    \case{white}{
-      \drawWhiteStone{#2}{#3};
-    }
-  \end{switch}
+  \drawStoneRaw{#1}{#2}{#3};
 }
 
 \newcounter{moveCounter}
 \setcounter{moveCounter}{1}
 \newcommand{\drawMove}[3]{
-  \begin{switch}{#1}
-    % TODO: Change fontsize if the number goes beyond 99.
-    \case{black}{
-      \drawBlackStone{#2}{#3}
-        node[color = white] {\themoveCounter};
-    }
-    \case{white}{
-      \drawWhiteStone{#2}{#3}
-        node {\themoveCounter};
-    }
+  \drawStoneRaw{#1}{#2}{#3}
+    node[color = \myIfStrEqTF{black}{#1}{white}{black}]
+      {\themoveCounter};
 
-    \stepcounter{moveCounter}
-  \end{switch}
+  \stepcounter{moveCounter}
 }
 
 \newenvironment{goban}{
   \begin{tikzpicture}
-    \gogrid[10]
+    \goGrid{10}{19}
 }{
-    \setcounter{movecounter}{1}
+    \setcounter{moveCounter}{1}
   \end{tikzpicture}
 }

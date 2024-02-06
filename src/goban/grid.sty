@@ -1,3 +1,4 @@
+\newlength{\boardStep}
 % Parameters
 %
 % 1: dimension (in cm)
@@ -6,6 +7,7 @@
 % Example: A 19x19 board with size 10cm x 10cm: `\gogrid{10}{19}'
 \newcommand{\goGrid}[2]{
   \pgfmathsetmacro{\step}{#1 / (#2 - 1)} % chktex 1
+  \setlength{\boardStep}{\step cm}
 
   \draw[step=\step] (0, 0) grid (#1, #1);
   
