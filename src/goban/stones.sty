@@ -1,15 +1,32 @@
+% From [this answer](https://tex.stackexchange.com/a/708876/64441).
+\newcommand\notwhite{black}
+\newcommand\notblack{white}
+
+% From [this answer](https://tex.stackexchange.com/a/708866/64441)
 \ExplSyntaxOn
-  \cs_new_eq:NN \myIfStrEqTF \str_if_eq:nnTF
+\cs_new_eq:NN \ifStrEq \str_if_eq:nnTF
 \ExplSyntaxOff
 
+% Parameters
+%
+% 1: stone color (black or white)
+% 2: X Coordinate
+% 3: Y Coordinate
+% 
+% Example: A 19x19 board with size 10cm x 10cm: `\gogrid{10}{19}'
 \newcommand{\drawStoneRaw}[3]{
-  % TODO: Change fontsize if the number goes beyond 99.
+  \pgfmathsetmacro{\xCoord}{\step * #2}
+  \pgfmathsetmacro{\yCoord}{\step * #3}
+  \pgfmathsetmacro{\outlineWidth}{\step / 20}
+  \pgfmathsetmacro{\stoneRadius}{\step * \ifStrEq{black}{#1}{0.99}{0.95} / 2}
+
   \draw[
-    draw = \myIfStrEqTF{black}{#1}{white}{black},
+    draw = \UseName{not#1},
     fill = #1, 
-    line width = 0.1mm
+    line width = \outlineWidth
   ]
-    (#2, #3) circle [radius = 0.25cm]
+    (\xCoord, \yCoord)
+    circle [radius = \stoneRadius]
 }
 
 \newcommand{\drawStone}[3]{
@@ -20,16 +37,9 @@
 \setcounter{moveCounter}{1}
 \newcommand{\drawMove}[3]{
   \drawStoneRaw{#1}{#2}{#3}
-    node[color = \myIfStrEqTF{black}{#1}{white}{black}]
+    % TODO: Change fontsize if the number goes beyond 99.
+    node[color = \UseName{not#1}]
       {\themoveCounter};
 
   \stepcounter{moveCounter}
-}
-
-\newenvironment{goban}{
-  \begin{tikzpicture}
-    \goGrid{10}{19}
-}{
-    \setcounter{moveCounter}{1}
-  \end{tikzpicture}
 }
