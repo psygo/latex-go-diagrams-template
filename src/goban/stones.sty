@@ -1,10 +1,10 @@
-% From [this answer](https://tex.stackexchange.com/a/708876/64441).
+% From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708876/64441).
 \newcommand\notwhite{black}
 \newcommand\notblack{white}
 
-% From [this answer](https://tex.stackexchange.com/a/708866/64441).
+% From [this answer by @Skillmon](https://tex.stackexchange.com/a/708866/64441).
 \ExplSyntaxOn
-\cs_new_eq:NN \ifStrEq \str_if_eq:nnTF
+  \cs_new_eq:NN \ifStrEq \str_if_eq:nnTF
 \ExplSyntaxOff
 
 % Parameters
@@ -51,7 +51,7 @@
   \stepcounter{moveCounter}
 }
 
-% From [this answer](https://tex.stackexchange.com/a/708893/64441).
+% From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708893/64441).
 \ExplSyntaxOn
   \cs_generate_variant:Nn \int_from_alph:n {e}
 
@@ -85,4 +85,12 @@
 % Example: `\drawMoveFromSgfCoords{black}{ab}`
 \newcommand{\drawMoveFromSgfCoords}[2]{
   \drawMove{#1}{\stringToCoordX{#2}}{\stringToCoordY{#2}}
+}
+
+\newcommand{\drawStonesFromSgfCoords}{
+  \foreach \coords in {ab, cd}{
+    % \coords
+    \stringToCoordX{\thecoords}
+    % \drawStoneFromSgfCoords{black}{\coords}
+  }
 }
