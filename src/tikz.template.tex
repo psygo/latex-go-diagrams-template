@@ -3,29 +3,30 @@
 \usepackage{./goban/goban}
 
 \begin{document}
-  \begin{figure}[ht]
-    \begin{center}
-      \begin{tikzpicture}
-        \goGrid{10}{19}
-
-        % \drawStoneFromSgfCoords{black}{ab}
-        % \drawMoveFromSgfCoords{black}{cd}
-        % \drawStonesFromSgfCoords
-
-      \end{tikzpicture}
-      \caption{Goban 1}\label{my_goban_1}
-    \end{center}
-  \end{figure}
-
   % \begin{figure}[ht]
   %   \begin{center}
-  %     \begin{goban}
-  %       \drawMove{white}{2 * 10cm / 18}{3 * 10cm / 18}
-  %       \drawMove{black}{3 * 10cm / 18}{3 * 10cm / 18}
-  %     \end{goban}
-  %     \caption{Goban 2}\label{my_goban_2}
+  %     \begin{tikzpicture}
+  %       \goGrid{10}{19}
+
+  %       % \drawStoneFromSgfCoords{black}{ab}
+  %       % \drawMoveFromSgfCoords{black}{cd}
+  %       % \drawStonesFromSgfCoords
+
+  %     \end{tikzpicture}
+  %     \caption{Goban 1}\label{my_goban_1}
   %   \end{center}
   % \end{figure}
+
+  \begin{figure}[ht]
+    \begin{center}
+      \begin{goban}{10}{19}
+        \drawStoneFromSgfCoords{black}{ab}
+        \drawMoveFromSgfCoords{white}{de}
+        \drawMoveFromSgfCoords{black}{cd}
+      \end{goban}
+      \caption{Goban 2}\label{my_goban_2}
+    \end{center}
+  \end{figure}
 
   % \begin{figure}[ht]
   %   \begin{center}
