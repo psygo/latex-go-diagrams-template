@@ -2,7 +2,7 @@
 \newcommand\notwhite{black}
 \newcommand\notblack{white}
 
-% From [this answer](https://tex.stackexchange.com/a/708866/64441)
+% From [this answer](https://tex.stackexchange.com/a/708866/64441).
 \ExplSyntaxOn
 \cs_new_eq:NN \ifStrEq \str_if_eq:nnTF
 \ExplSyntaxOff
@@ -13,10 +13,10 @@
 % 2: X Coordinate
 % 3: Y Coordinate
 % 
-% Example: A 19x19 board with size 10cm x 10cm: `\gogrid{10}{19}'
+% Example: `\drawStone{black}{2}{3}`
 \newcommand{\drawStoneRaw}[3]{
-  \pgfmathsetmacro{\xCoord}{\step * #2}
-  \pgfmathsetmacro{\yCoord}{\step * #3}
+  \pgfmathsetmacro{\xCoord}{\step * (#2 - 1)}
+  \pgfmathsetmacro{\yCoord}{\step * (#3 - 1)}
   \pgfmathsetmacro{\outlineWidth}{\step / 20}
   \pgfmathsetmacro{\stoneRadius}{\step * \ifStrEq{black}{#1}{0.99}{0.95} / 2}
 
@@ -33,6 +33,13 @@
   \drawStoneRaw{#1}{#2}{#3};
 }
 
+% Parameters
+%
+% 1: stone color (black or white)
+% 2: X Coordinate
+% 3: Y Coordinate
+% 
+% Example: `\drawMove{black}{2}{3}`
 \newcounter{moveCounter}
 \setcounter{moveCounter}{1}
 \newcommand{\drawMove}[3]{
@@ -42,4 +49,36 @@
       {\themoveCounter};
 
   \stepcounter{moveCounter}
+}
+
+% From [this answer](https://tex.stackexchange.com/a/708893/64441).
+\ExplSyntaxOn
+  \cs_generate_variant:Nn \int_from_alph:n {e}
+
+  \newcommand\stringToCoordX[1]{
+    \int_from_alph:e{\use_i:nn#1}
+  }
+  \newcommand\stringToCoordY[1]{
+    ~\int_from_alph:e{\use_ii:nn#1}
+  }
+\ExplSyntaxOff
+
+% Parameters
+%
+% 1: stone color (black or white)
+% 2: SGF Coordinates
+% 
+% Example: `\drawStoneFromSgfCoords{black}{ab}`
+\newcommand{\drawStoneFromSgfCoords}[2]{
+  \drawStone{#1}{\stringToCoordX{#2}}{\stringToCoordY{#2}}
+}
+
+% Parameters
+%
+% 1: move color (black or white)
+% 2: SGF Coordinates
+% 
+% Example: `\drawMoveFromSgfCoords{black}{ab}`
+\newcommand{\drawMoveFromSgfCoords}[2]{
+  \drawMove{#1}{\stringToCoordX{#2}}{\stringToCoordY{#2}}
 }

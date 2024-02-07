@@ -3,7 +3,7 @@
 % 1: dimension (in cm)
 % 2: board size (square)
 % 
-% Example: A 19x19 board with size 10cm x 10cm: `\gogrid{10}{19}'
+% Example: A 19x19 board with size 10cm x 10cm: `\gogrid{10}{19}`
 \newcommand{\goGrid}[2]{
   \pgfmathsetmacro{\step}{#1 / (#2 - 1)} % chktex 1
 
@@ -22,7 +22,7 @@
 % 2: board size (square)
 % 3: step
 % 
-% Example: A 19x19 board with size 10cm x 10cm: `\drawHoshis{10}{19}{\step}'
+% Example: A 19x19 board with size 10cm x 10cm: `\drawHoshis{10}{19}{\step}`
 \newcommand{\drawHoshis}[3]{
   \ifnum#2=9\relax
     \foreach \sloc in {{3, 3}, {3, 7}, {7, 3}, {7, 7}, {5, 5}}{
@@ -39,7 +39,7 @@
 %
 % 1: dimension (in cm)
 % 
-% Example: \boardOutline{10}
+% Example: `\boardOutline{10}`
 \newcommand{\boardOutline}[1]{
   \pgfmathsetmacro{\boardOutlineLineWidth}{#1 * 5 / 1000}
   % Just so the board outline isn't jagged
@@ -67,7 +67,7 @@
 % 2: board size (square)
 % 3: step
 % 
-% Example: A 19x19 board with size 10cm x 10cm: `\coordinates{10}{19}{\step}'
+% Example: A 19x19 board with size 10cm x 10cm: `\coordinates{10}{19}{\step}`
 \newcommand{\coordinates}[3]{
   \pgfmathsetmacro{\leftRightShift}{#3cm / 1.4}
   \pgfmathsetmacro{\topBottomShift}{#3cm / 1.5}
