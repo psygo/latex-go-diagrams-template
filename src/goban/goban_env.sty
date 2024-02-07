@@ -4,9 +4,9 @@
 % 2: board size (square)
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\goban{10}{19}`
-\newenvironment{goban}{
+\newenvironment{goban}[2]{
   \begin{tikzpicture}
-    \goGrid{10}{19}
+    \goGrid{#1}{#2}
 }{
     \setcounter{moveCounter}{1}
   \end{tikzpicture}

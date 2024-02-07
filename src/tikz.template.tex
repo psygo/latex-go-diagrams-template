@@ -1,68 +1,21 @@
 \documentclass{article}
 
-\usepackage{tikz}
-
-% From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708876/64441).
-\newcommand\notwhite{black}
-\newcommand\notblack{white}
-
-% From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708893/64441).
-\ExplSyntaxOn
-  \cs_generate_variant:Nn \int_from_alph:n {e}
-
-  \newcommand\stringToCoordX[1]{
-    \int_from_alph:e{\use_i:nn#1}
-  }
-  \newcommand\stringToCoordY[1]{
-    ~\int_from_alph:e{\use_ii:nn#1}
-  }
-\ExplSyntaxOff
-
-\newcommand{\drawStoneFromSgfCoords}[2]{
-  \pgfmathsetmacro{\x}{\stringToCoordX{#2} - 1}
-  \pgfmathsetmacro{\y}{\stringToCoordY{#2} - 1}
-
-  \draw[draw = \UseName{not#1}, fill = #1, line width = 0.1mm]
-    (\x * 10cm / 18, \y * 10cm / 18)
-    circle [radius = 0.2575cm];
-    node[color = white] {1};
-}
-
-\newcommand{\drawStonesFromSgfCoords}[1]{
-  \foreach \coords in {#1}{
-    \drawStoneFromSgfCoords{{\coords}[0]}{{\coords}[1]}
-  }
-}
+\usepackage{./goban/goban}
 
 \begin{document}
-  \begin{tikzpicture}
-    \pgfmathsetmacro{\step}{10 / 18}
+  \begin{figure}[ht]
+    \begin{center}
+      \begin{tikzpicture}
+        \goGrid{10}{19}
 
-    \draw[step=\step] (0, 0) grid (10, 10);
+        % \drawStoneFromSgfCoords{black}{ab}
+        % \drawMoveFromSgfCoords{black}{cd}
+        % \drawStonesFromSgfCoords
 
-    \drawStoneFromSgfCoords{black}{ab}
-    \drawStoneFromSgfCoords{white}{cd}
-    
-    % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
-  \end{tikzpicture}
-\end{document}
-
-% \usepackage{./goban/goban}
-
-% \begin{document}
-%   \begin{figure}[ht]
-%     \begin{center}
-%       \begin{tikzpicture}
-%         \goGrid{10}{19}
-
-%         % \drawStoneFromSgfCoords{black}{ab}
-%         % \drawMoveFromSgfCoords{black}{cd}
-%         % \drawStonesFromSgfCoords
-
-%       \end{tikzpicture}
-%       \caption{Goban 1}\label{my_goban_1}
-%     \end{center}
-%   \end{figure}
+      \end{tikzpicture}
+      \caption{Goban 1}\label{my_goban_1}
+    \end{center}
+  \end{figure}
 
   % \begin{figure}[ht]
   %   \begin{center}
@@ -83,4 +36,4 @@
   %     \caption{Goban 3}\label{my_goban_3}
   %   \end{center}
   % \end{figure}
-% \end{document}
+\end{document}
