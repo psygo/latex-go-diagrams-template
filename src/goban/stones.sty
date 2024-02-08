@@ -33,6 +33,10 @@
   \drawStoneRaw{#1}{#2}{#3};
 }
 
+\newcommand{\stepMoveCounter}{
+  \stepcounter{moveCounter}
+}
+
 % Parameters
 %
 % 1: stone color (black or white)
@@ -48,7 +52,7 @@
     node[color = \UseName{not#1}]
       {\themoveCounter};
 
-  \stepcounter{moveCounter}
+  \stepMoveCounter
 }
 
 % From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708893/64441).
@@ -87,10 +91,40 @@
   \drawMove{#1}{\stringToCoordX{#2}}{\stringToCoordY{#2}}
 }
 
-\newcommand{\drawStonesFromSgfCoords}{
-  \foreach \coords in {ab, cd}{
-    % \coords
-    \stringToCoordX{\thecoords}
-    % \drawStoneFromSgfCoords{black}{\coords}
+% From [this answer by @JasperHabicht](https://tex.stackexchange.com/a/708961/64441).
+%
+% Parameters
+%
+% 1: array of {<black | white>, <coordinates}
+%
+% Example usage: `drawStonesFromSgfCoords{{black, ab}, {white, cd}}`
+\ExplSyntaxOn
+  \NewExpandableDocumentCommand{\drawStonesFromSgfCoords}{ m }{
+    \clist_set:Nn \l_tmpa_clist { #1 }
+    \clist_map_inline:Nn \l_tmpa_clist {
+      \clist_set:Nn \l_tmpb_clist { ##1 }
+      \clist_pop:NN \l_tmpb_clist \l_tmpa_tl 
+      \clist_pop:NN \l_tmpb_clist \l_tmpb_tl 
+      \exp_args:Noo \drawStoneFromSgfCoords { \l_tmpa_tl } { \l_tmpb_tl }
+    }
   }
-}
+\ExplSyntaxOff
+
+% From [this answer by @JasperHabicht](https://tex.stackexchange.com/a/708961/64441).
+%
+% Parameters
+%
+% 1: array of {<black | white>, <coordinates}
+%
+% Example usage: `drawMovesFromSgfCoords{{black, ab}, {white, cd}}`
+\ExplSyntaxOn
+  \NewExpandableDocumentCommand{\drawMovesFromSgfCoords}{ m }{
+    \clist_set:Nn \l_tmpa_clist { #1 }
+    \clist_map_inline:Nn \l_tmpa_clist {
+      \clist_set:Nn \l_tmpb_clist { ##1 }
+      \clist_pop:NN \l_tmpb_clist \l_tmpa_tl 
+      \clist_pop:NN \l_tmpb_clist \l_tmpb_tl 
+      \exp_args:Noo \drawMoveFromSgfCoords { \l_tmpa_tl } { \l_tmpb_tl }
+    }
+  }
+\ExplSyntaxOff

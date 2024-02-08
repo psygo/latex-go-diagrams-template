@@ -10,7 +10,6 @@
 
   %       % \drawStoneFromSgfCoords{black}{ab}
   %       % \drawMoveFromSgfCoords{black}{cd}
-  %       % \drawStonesFromSgfCoords
 
   %     \end{tikzpicture}
   %     \caption{Goban 1}\label{my_goban_1}
@@ -20,21 +19,13 @@
   \begin{figure}[ht]
     \begin{center}
       \begin{goban}{10}{19}
-        \drawStoneFromSgfCoords{black}{ab}
-        \drawMoveFromSgfCoords{white}{de}
-        \drawMoveFromSgfCoords{black}{cd}
+        % \drawStoneFromSgfCoords{black}{ab}
+        % \drawMoveFromSgfCoords{white}{de}
+        % \drawMoveFromSgfCoords{black}{cd}
+        % \drawStonesFromSgfCoords{{black, ss}, {white, rr}}
+        \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
       \end{goban}
       \caption{Goban 2}\label{my_goban_2}
     \end{center}
   \end{figure}
-
-  % \begin{figure}[ht]
-  %   \begin{center}
-  %     \begin{goban}
-  %       \drawmove{white}{2 * 10cm / 18}{3 * 10cm / 18}
-  %       \drawmove{black}{3 * 10cm / 18}{3 * 10cm / 18}
-  %     \end{goban}
-  %     \caption{Goban 3}\label{my_goban_3}
-  %   \end{center}
-  % \end{figure}
 \end{document}
