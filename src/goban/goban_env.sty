@@ -1,3 +1,11 @@
+% TODO: This shouldn't really behave this way...
+\newcommand{\partialBoardClipping}[2]{
+  \calculateStep{#1}{#2}
+
+  \clip (-1 * \step, - 1 * \step) rectangle 
+      + (3 * \step,  3 * \step);
+}
+
 % Parameters
 %
 % 1: dimension (in cm)
@@ -5,7 +13,7 @@
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\goban{10}{19}`
 \newenvironment{goban}[2]{
-  \begin{tikzpicture}
+  \begin{tikzpicture}[scale = 1, transform shape]
     \goGrid{#1}{#2}
 }{
     \setcounter{moveCounter}{1}
