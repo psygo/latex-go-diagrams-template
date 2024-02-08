@@ -16,6 +16,9 @@
   %   \end{center}
   % \end{figure}
 
+  % \def\sgfA{;B[ab];W[cd]}
+  % \def\sgfB{(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05];B[as];W[bs];B[cs])}
+
   \begin{figure}[ht]
     \begin{center}
       \begin{goban}{10}{19}
@@ -23,10 +26,13 @@
         % \drawMoveFromSgfCoords{white}{de}
         % \drawMoveFromSgfCoords{black}{cd}
 
-        % \drawStonesFromSgfCoords{{black, ss}, {white, rr}}
-        \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
+        \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
+        % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
+        % \parseSgf{\sgfA}
       \end{goban}
       \caption{Goban 2}\label{my_goban_2}
     \end{center}
   \end{figure}
+
+  % \parseSgf{\sgfB}
 \end{document}

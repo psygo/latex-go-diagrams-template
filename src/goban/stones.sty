@@ -52,10 +52,43 @@
 \ExplSyntaxOff
 
 %-----------------------------------------------------------
+% Labels
+
+\newcommand{\drawLabel}[1]{
+  \triangleLabel{#1}
+}
+
+\newcommand{\triangleLabel}[1]{
+  % \node[
+  %   isosceles triangle,
+  %   draw = \UseName{not#1},
+  %   fill = #1, 
+  %   rotate = 90,
+  %   isosceles triangle apex angle = 60,
+  %   % node distance = \stoneRadius * 0.2,
+  %   minimum height = 0.01,
+  %   minimum width = 0.01,
+  % ]
+  %   (T) at (\xCoord, \yCoord - \step / 5){};
+  % \pgfmathsetmacro{\triangleSize}{\stoneRadius / 10}
+  % \node [regular polygon, regular polygon sides=4, draw, densely dashed, minimum width=0.5mm] {};
+  \draw (0,0)  node[minimum size=0.005mm,draw] {};
+   
+  % \node (tri) [
+  %   regular polygon,
+  %   regular polygon sides=3, 
+  %   draw,
+  %   minimum width=2mm
+  % ](T) at (\xCoord, \yCoord - \step / 5){} ;
+   
+}
+
+%-----------------------------------------------------------
 % Drawing Moves and Stones
 
 \newcommand{\drawStone}[3]{
   \drawStoneRaw{#1}{#2}{#3};
+  \drawLabel{#1}
 }
 
 % Parameters
@@ -138,10 +171,5 @@
     }
   }
 \ExplSyntaxOff
-
-%-----------------------------------------------------------
-% Parse SGF
-
-
 
 %-----------------------------------------------------------
