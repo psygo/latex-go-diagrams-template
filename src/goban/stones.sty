@@ -10,28 +10,6 @@
   \cs_new_eq:NN \ifStrEq \str_if_eq:nnTF
 \ExplSyntaxOff
 
-% Parameters
-%
-% 1: stone color (black or white)
-% 2: X Coordinate
-% 3: Y Coordinate
-% 
-% Example: `\drawStone{black}{2}{3}`
-\newcommand{\drawStoneRaw}[3]{
-  \pgfmathsetmacro{\xCoord}{\step * (#2 - 1)}
-  \pgfmathsetmacro{\yCoord}{\step * (#3 - 1)}
-  \pgfmathsetmacro{\outlineWidth}{\step / 20}
-  \pgfmathsetmacro{\stoneRadius}{\step * \ifStrEq{black}{#1}{0.99}{0.95} / 2}
-
-  \draw[
-    draw = \UseName{not#1},
-    fill = #1, 
-    line width = \outlineWidth
-  ]
-    (\xCoord, \yCoord)
-    circle [radius = \stoneRadius]
-}
-
 \newcounter{moveCounter}
 \setcounter{moveCounter}{1}
 
@@ -54,41 +32,110 @@
 %-----------------------------------------------------------
 % Labels
 
-\newcommand{\drawLabel}[1]{
-  \triangleLabel{#1}
+% Parameters:
+%
+% 1: Color
+%
+% Example usage: `\triangleLabel{black}`
+\newcommand{\triangleLabel}[1]{
+  \pgfmathsetmacro{\triangleYCoord}{\yCoord - \stoneRadius * 0.075}
+  \pgfmathsetmacro{\triangleSize}{\stoneRadius * 30}
+
+  \draw (\xCoord, \triangleYCoord) node[
+    isosceles triangle,
+    draw = \UseName{not#1},
+    fill = #1, 
+    rotate = 90,
+    isosceles triangle apex angle = 60,
+    inner sep = 0pt,
+    minimum height = \triangleSize,
+    minimum width = \triangleSize,
+  ] {};
 }
 
-\newcommand{\triangleLabel}[1]{
-  % \node[
-  %   isosceles triangle,
-  %   draw = \UseName{not#1},
-  %   fill = #1, 
-  %   rotate = 90,
-  %   isosceles triangle apex angle = 60,
-  %   % node distance = \stoneRadius * 0.2,
-  %   minimum height = 0.01,
-  %   minimum width = 0.01,
-  % ]
-  %   (T) at (\xCoord, \yCoord - \step / 5){};
-  % \pgfmathsetmacro{\triangleSize}{\stoneRadius / 10}
-  % \node [regular polygon, regular polygon sides=4, draw, densely dashed, minimum width=0.5mm] {};
-  \draw (0,0)  node[minimum size=0.005mm,draw] {};
-   
-  % \node (tri) [
-  %   regular polygon,
-  %   regular polygon sides=3, 
-  %   draw,
-  %   minimum width=2mm
-  % ](T) at (\xCoord, \yCoord - \step / 5){} ;
-   
+% Parameters:
+%
+% 1: Color
+%
+% Example usage: `\squareLabel{black}`
+\newcommand{\squareLabel}[1]{
+  \pgfmathsetmacro{\squareSize}{\stoneRadius * 30}
+
+  \draw (\xCoord, \yCoord) node[
+    draw = \UseName{not#1},
+    fill = #1, 
+    inner sep = 0pt,
+    minimum size = \squareSize,
+  ] {}; 
+}
+
+% Parameters:
+%
+% 1: Color
+%
+% Example usage: `\circleLabel{black}`
+\newcommand{\circleLabel}[1]{
+  \pgfmathsetmacro{\circleSize}{\stoneRadius * 0.5}
+
+  \draw[
+    draw = \UseName{not#1},
+    fill = #1, 
+    line width = \outlineWidth
+  ]
+    (\xCoord, \yCoord)
+    circle [radius = \circleSize];
+}
+
+% Parameters:
+%
+% 1: Color
+%
+% Example usage: `\crossLabel{black}`
+\newcommand{\crossLabel}[1]{
+  \draw (\xCoord, \yCoord) 
+    node[
+      color = \UseName{not#1},
+      font = \sffamily,
+    ] {X};
+}
+
+% Parameters:
+%
+% 1: Color
+% 2: Text
+%
+% Example usage: `\crossLabel{black}{A}`
+\newcommand{\textLabel}[2]{
+  \draw (\xCoord, \yCoord)
+    node[
+      % TODO: Change fontsize if the number goes beyond 99.
+      color = \UseName{not#1},
+    ] {#2};
 }
 
 %-----------------------------------------------------------
 % Drawing Moves and Stones
 
+% Parameters
+%
+% 1: stone color (black or white)
+% 2: X Coordinate
+% 3: Y Coordinate
+% 
+% Example: `\drawStone{black}{2}{3}`
 \newcommand{\drawStone}[3]{
-  \drawStoneRaw{#1}{#2}{#3};
-  \drawLabel{#1}
+  \pgfmathsetmacro{\xCoord}{\step * (#2 - 1)}
+  \pgfmathsetmacro{\yCoord}{\step * (#3 - 1)}
+  \pgfmathsetmacro{\outlineWidth}{\step / 20}
+  \pgfmathsetmacro{\stoneRadius}{\step * \ifStrEq{black}{#1}{0.99}{0.95} / 2}
+
+  \draw[
+    draw = \UseName{not#1},
+    fill = #1, 
+    line width = \outlineWidth
+  ]
+    (\xCoord, \yCoord)
+    circle [radius = \stoneRadius];
 }
 
 % Parameters
@@ -99,10 +146,8 @@
 % 
 % Example: `\drawMove{black}{2}{3}`
 \newcommand{\drawMove}[3]{
-  \drawStoneRaw{#1}{#2}{#3}
-    % TODO: Change fontsize if the number goes beyond 99.
-    node[color = \UseName{not#1}]
-      {\themoveCounter};
+  \drawStone{#1}{#2}{#3}
+  \textLabel{#1}{\themoveCounter}
 
   \stepMoveCounter
 }
