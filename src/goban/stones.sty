@@ -1,3 +1,6 @@
+%-----------------------------------------------------------
+% Helpers
+
 % From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708876/64441).
 \newcommand\notwhite{black}
 \newcommand\notblack{white}
@@ -29,30 +32,11 @@
     circle [radius = \stoneRadius]
 }
 
-\newcommand{\drawStone}[3]{
-  \drawStoneRaw{#1}{#2}{#3};
-}
+\newcounter{moveCounter}
+\setcounter{moveCounter}{1}
 
 \newcommand{\stepMoveCounter}{
   \stepcounter{moveCounter}
-}
-
-% Parameters
-%
-% 1: stone color (black or white)
-% 2: X Coordinate
-% 3: Y Coordinate
-% 
-% Example: `\drawMove{black}{2}{3}`
-\newcounter{moveCounter}
-\setcounter{moveCounter}{1}
-\newcommand{\drawMove}[3]{
-  \drawStoneRaw{#1}{#2}{#3}
-    % TODO: Change fontsize if the number goes beyond 99.
-    node[color = \UseName{not#1}]
-      {\themoveCounter};
-
-  \stepMoveCounter
 }
 
 % From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708893/64441).
@@ -66,6 +50,32 @@
     ~\int_from_alph:e{\use_ii:nn#1}
   }
 \ExplSyntaxOff
+
+%-----------------------------------------------------------
+% Drawing Moves and Stones
+
+\newcommand{\drawStone}[3]{
+  \drawStoneRaw{#1}{#2}{#3};
+}
+
+% Parameters
+%
+% 1: stone color (black or white)
+% 2: X Coordinate
+% 3: Y Coordinate
+% 
+% Example: `\drawMove{black}{2}{3}`
+\newcommand{\drawMove}[3]{
+  \drawStoneRaw{#1}{#2}{#3}
+    % TODO: Change fontsize if the number goes beyond 99.
+    node[color = \UseName{not#1}]
+      {\themoveCounter};
+
+  \stepMoveCounter
+}
+
+%-----------------------------------------------------------
+% Draw from SGF Coords
 
 % It works with both lower and uppercase coordinates.
 %
@@ -128,3 +138,10 @@
     }
   }
 \ExplSyntaxOff
+
+%-----------------------------------------------------------
+% Parse SGF
+
+
+
+%-----------------------------------------------------------
