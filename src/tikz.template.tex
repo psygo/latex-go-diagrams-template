@@ -7,7 +7,8 @@
     \begin{center}
       \begin{tikzpicture}
         \goGrid[board dimension = 10,
-                board size      = 19
+                board size      = 19,
+                coords          = true,
         ]
 
         \stone[color = black,
@@ -19,10 +20,10 @@
         \move[color = white,
                x    = 5,
                y    = 5,]
+
         \move[color = black,
                x    = 6,
                y    = 6,]
-        \crossLabel{black}
 
         % \drawMove[color = black,
         %           x     = 5,

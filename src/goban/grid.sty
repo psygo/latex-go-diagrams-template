@@ -8,12 +8,15 @@
   \pgfmathsetmacro{\step}{#1 / (#2 - 1)} % chktex 1
 }
 
+\newif\ifcoords
+
 % TODO: add coordinates boolean option
 \pgfkeys{/phili/goGrid/.cd, 
   board dimension/.store in = \boardDimension,
   board size/.store in      = \boardSize,
   board dimension           = 10cm,
   board size                = 19,
+  coords/.is if             = coords,
 }
 
 % Parameters
@@ -38,8 +41,10 @@
   
   \boardOutline{\boardDimension}
   
-  \coordinates{\boardDimension}{\boardSize}{\step}
-  
+  \ifcoords
+    \coordinates{\boardDimension}{\boardSize}{\step}
+  \fi
+
   \drawHoshis{\boardDimension}{\boardSize}{\step}
 }
 
