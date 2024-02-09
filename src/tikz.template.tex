@@ -2,62 +2,66 @@
 
 \usepackage{./goban/goban}
 
+\def\sgfA{;B[ab];W[cd]}
+\def\sgfB{(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05];B[as];W[bs];B[cs])}
+\def\sgfC{(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05];B[as];W[bs];B[cs];PL[W]AB[dq]AW[eq])}
+
 \begin{document}
-  % \begin{figure}[ht]
-  %   \begin{center}
-  %     \begin{tikzpicture}
-        % \goGrid[board dimension = 10,
-        %         board size      = 19,
-        %         coords          = true,
-        % ]
-
-  %       \stone[color = black,
-  %              x     = 3,
-  %              y     = 3,]
-  %       \stone[color = white,
-  %              x     = 4,
-  %              y     = 4,]
-  %       \move[color = white,
-  %              x    = 5,
-  %              y    = 5,]
-
-  %       \move[color = black,
-  %              x    = 6,
-  %              y    = 6,]
-
-  %       % \drawMove[color = black,
-  %       %           x     = 5,
-  %       %           y     = 5,]
-
-  %       % \drawStoneFromSgfCoords{black}{ab}
-  %       % \drawMoveFromSgfCoords{black}{cd}
-
-  %     \end{tikzpicture}
-  %     \caption{Goban 1}\label{my_goban_1}
-  %   \end{center}
-  % \end{figure}
-
-  % \def\sgfA{;B[ab];W[cd]}
-  % \def\sgfB{(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05];B[as];W[bs];B[cs])}
-
   \begin{figure}[ht]
     \begin{center}
-      \begin{goban}[board dimension = 10,
-                    board size      = 19,
-                    coords          = true,
-      ]
+      \begin{tikzpicture}
+        \goGrid[board dimension = 10,
+                board size      = 19,
+                coords          = true,
+        ]
+
+        \parseSgfB{\sgfA}
+
+        % \stone[color = black,
+        %        x     = 3,
+        %        y     = 3,]
+        % \stone[color = white,
+        %        x     = 4,
+        %        y     = 4,]
+        % \move[color = white,
+        %        x    = 5,
+        %        y    = 5,]
+
+        % \move[color = black,
+        %        x    = 6,
+        %        y    = 6,]
+
+        % \drawMove[color = black,
+        %           x     = 5,
+        %           y     = 5,]
+
         % \drawStoneFromSgfCoords{black}{ab}
-        % \drawMoveFromSgfCoords{white}{de}
         % \drawMoveFromSgfCoords{black}{cd}
 
-        % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
-        % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
-
-        % \parseSgf{\sgfA}
-      \end{goban}
-      \caption{Goban 2}\label{my_goban_2}
+      \end{tikzpicture}
+      \caption{Goban 1}\label{my_goban_1}
     \end{center}
   \end{figure}
 
-  % \parseSgf{\sgfB}
+
+  % \begin{figure}[ht]
+  %   \begin{center}
+  %     \begin{goban}[board dimension = 10,
+  %                   board size      = 19,
+  %                   coords          = true,
+  %     ]
+  %       % \drawStoneFromSgfCoords{black}{ab}
+  %       % \drawMoveFromSgfCoords{white}{de}
+  %       % \drawMoveFromSgfCoords{black}{cd}
+
+  %       % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
+  %       % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
+  %       \parseSgf{\sgfA}
+
+  %     \end{goban}
+  %     \caption{Goban 2}\label{my_goban_2}
+  %   \end{center}
+  % \end{figure}
+
+  % \parseSgfB{\sgfA}
 \end{document}
