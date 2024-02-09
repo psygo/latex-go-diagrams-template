@@ -6,20 +6,17 @@
       + (3 * \step,  3 * \step);
 }
 
-
 % Parameters
 %
 % 1: dimension (in cm)
 % 2: board size (square)
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\goban{10}{19}`
-\newenvironment{goban}[2]{
+\newenvironment{goban}[1][]{
   \begin{tikzpicture}[scale = 1, transform shape]
-    % \goGrid{#1}{#2}
-    \goGridB[
-      board dimension = 10cm,
-      board size = 19,
-    ]
+    \pgfkeys{/phili/goGrid/.cd, #1}
+    
+    \goGrid
 }{
     \setcounter{moveCounter}{1}
   \end{tikzpicture}
