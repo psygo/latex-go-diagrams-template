@@ -3,37 +3,39 @@
 \usepackage{./goban/goban}
 
 \begin{document}
-  % \begin{figure}[ht]
-  %   \begin{center}
-  %     \begin{tikzpicture}
-  %       \goGrid{10}{19}
+  \begin{figure}[ht]
+    \begin{center}
+      \begin{tikzpicture}
+        \goGrid[board dimension = 10,
+                board size = 9
+        ]
 
-  %       % \drawStoneFromSgfCoords{black}{ab}
-  %       % \drawMoveFromSgfCoords{black}{cd}
+        % \drawStoneFromSgfCoords{black}{ab}
+        % \drawMoveFromSgfCoords{black}{cd}
 
-  %     \end{tikzpicture}
-  %     \caption{Goban 1}\label{my_goban_1}
-  %   \end{center}
-  % \end{figure}
+      \end{tikzpicture}
+      \caption{Goban 1}\label{my_goban_1}
+    \end{center}
+  \end{figure}
 
   % \def\sgfA{;B[ab];W[cd]}
   % \def\sgfB{(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05];B[as];W[bs];B[cs])}
 
-  \begin{figure}[ht]
-    \begin{center}
-      \begin{goban}{10}{19}
-        % \drawStoneFromSgfCoords{black}{ab}
-        % \drawMoveFromSgfCoords{white}{de}
-        % \drawMoveFromSgfCoords{black}{cd}
+  % \begin{figure}[ht]
+  %   \begin{center}
+  %     \begin{goban}{10}{19}
+  %       % \drawStoneFromSgfCoords{black}{ab}
+  %       % \drawMoveFromSgfCoords{white}{de}
+  %       % \drawMoveFromSgfCoords{black}{cd}
 
-        % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
-        \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
+  %       % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
+  %       \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
 
-        % \parseSgf{\sgfA}
-      \end{goban}
-      \caption{Goban 2}\label{my_goban_2}
-    \end{center}
-  \end{figure}
+  %       % \parseSgf{\sgfA}
+  %     \end{goban}
+  %     \caption{Goban 2}\label{my_goban_2}
+  %   \end{center}
+  % \end{figure}
 
   % \parseSgf{\sgfB}
 \end{document}

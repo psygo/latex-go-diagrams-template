@@ -1,23 +1,45 @@
-\newcommand{\calculateStep}[2]{
-  \pgfmathsetmacro{\step}{#1 / (#2 - 1)} % chktex 1
-}
-
 % Parameters
 %
 % 1: dimension (in cm)
 % 2: board size (square)
 % 
-% Example: A 19x19 board with size 10cm x 10cm: `\goGrid{10}{19}`
-\newcommand{\goGrid}[2]{
-  \calculateStep{#1}{#2}
+% Example: A 19x19 board with size 10cm x 10cm: `\calculateStep{10}{19}`
+\newcommand{\calculateStep}[2]{
+  \pgfmathsetmacro{\step}{#1 / (#2 - 1)} % chktex 1
+}
 
-  \draw[step=\step] (0, 0) grid (#1, #1);
+\pgfkeys{/phili/goGrid/.cd, 
+  board dimension/.store in = \boardDimension,
+  board size/.store in = \boardSize,
+  board dimension = 10cm,
+  board size = 19,
+}
+
+% Parameters
+%
+% - board dimension (in cm)
+% - board size (square)
+% 
+% Example: A 19x19 board with size 10cm x 10cm:
+%
+% ```tex
+% \goGrid[board dimension = 10,
+%         board size = 9
+% ]
+% ```
+\newcommand{\goGrid}[1][]{
+  \pgfkeys{/phili/goGrid/.cd, #1}
+
+  \calculateStep{\boardDimension}{\boardSize}
+
+  \draw[step=\step] (0, 0) grid
+    (\boardDimension, \boardDimension);
   
-  \boardOutline{#1}
+  \boardOutline{\boardDimension}
   
-  \coordinates{#1}{#2}{\step} % chktex 1
+  \coordinates{\boardDimension}{\boardSize}{\step}
   
-  \drawHoshis{#1}{#2}{\step}
+  \drawHoshis{\boardDimension}{\boardSize}{\step}
 }
 
 % Parameters
@@ -30,11 +52,11 @@
 \newcommand{\drawHoshis}[3]{
   \ifnum#2=9\relax
     \foreach \sloc in {{3, 3}, {3, 7}, {7, 3}, {7, 7}, {5, 5}}{
-      \pgfmathsetmacro{\hoshiCoordX}{#3 * ({\sloc}[0] - 1)}
-      \pgfmathsetmacro{\hoshiCoordY}{#3 * ({\sloc}[1] - 1)}
+      \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
+      \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
 
       \filldraw (\hoshiCoordX, \hoshiCoordY)
-        circle [radius=#3 / 10];
+        circle [radius=\step / 10];
     }
   \fi
   % TODO: if bigger than 9x9, then it should be mathematically calculated...
