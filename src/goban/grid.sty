@@ -8,11 +8,12 @@
   \pgfmathsetmacro{\step}{#1 / (#2 - 1)} % chktex 1
 }
 
+% TODO: add coordinates boolean option
 \pgfkeys{/phili/goGrid/.cd, 
   board dimension/.store in = \boardDimension,
-  board size/.store in = \boardSize,
-  board dimension = 10cm,
-  board size = 19,
+  board size/.store in      = \boardSize,
+  board dimension           = 10cm,
+  board size                = 19,
 }
 
 % Parameters
@@ -24,7 +25,7 @@
 %
 % ```tex
 % \goGrid[board dimension = 10,
-%         board size = 9
+%         board size      = 9
 % ]
 % ```
 \newcommand{\goGrid}[1][]{

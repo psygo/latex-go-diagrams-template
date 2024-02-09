@@ -138,6 +138,21 @@
     circle [radius = \stoneRadius];
 }
 
+\pgfkeys{/phili/stone/.cd, 
+  color/.store in = \stoneColor,
+  x/.store in     = \stoneXCoord,
+  y/.store in     = \stoneYCoord,
+  color           = black,
+  x               = 0,
+  y               = 0,
+}
+
+\newcommand{\stone}[1][]{
+  \pgfkeys{/phili/stone/.cd, #1}
+
+  \drawStone{\stoneColor}{\stoneXCoord}{\stoneYCoord}
+}
+
 % Parameters
 %
 % 1: stone color (black or white)
@@ -150,6 +165,12 @@
   \textLabel{#1}{\themoveCounter}
 
   \stepMoveCounter
+}
+
+\newcommand{\move}[1][]{
+  \pgfkeys{/phili/stone/.cd, #1}
+
+  \drawMove{\stoneColor}{\stoneXCoord}{\stoneYCoord}
 }
 
 %-----------------------------------------------------------

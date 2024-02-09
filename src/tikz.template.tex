@@ -7,8 +7,26 @@
     \begin{center}
       \begin{tikzpicture}
         \goGrid[board dimension = 10,
-                board size = 9
+                board size      = 19
         ]
+
+        \stone[color = black,
+               x     = 3,
+               y     = 3,]
+        \stone[color = white,
+               x     = 4,
+               y     = 4,]
+        \move[color = white,
+               x    = 5,
+               y    = 5,]
+        \move[color = black,
+               x    = 6,
+               y    = 6,]
+        \crossLabel{black}
+
+        % \drawMove[color = black,
+        %           x     = 5,
+        %           y     = 5,]
 
         % \drawStoneFromSgfCoords{black}{ab}
         % \drawMoveFromSgfCoords{black}{cd}
