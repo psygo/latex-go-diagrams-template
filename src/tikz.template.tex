@@ -1,67 +1,136 @@
 \documentclass{article}
 
-\usepackage{./goban/goban}
+\usepackage{tikz}
+\usepackage{listofitems}
+\usepackage{ifthen}
+
+% From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708876/64441).
+\newcommand\notwhite{black}
+\newcommand\notblack{white}
+
+% From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708893/64441).
+\ExplSyntaxOn
+  \cs_generate_variant:Nn \int_from_alph:n {e}
+
+  \NewExpandableDocumentCommand{\stringToCoordX}{ m }{
+    \int_from_alph:e { \use_i:nn #1 }
+  }
+  \NewExpandableDocumentCommand{\stringToCoordY}{ m }{
+    \int_from_alph:e { \use_ii:nn #1 }
+  }
+\ExplSyntaxOff
+
+\newcommand{\drawStoneFromSgfCoords}[2]{
+  \pgfmathsetmacro{\x}{\stringToCoordX{#2} - 1}
+  \pgfmathsetmacro{\y}{\stringToCoordY{#2} - 1}
+
+  \draw[draw = \UseName{not#1}, fill = #1, line width = 0.1mm]
+    (\x * 10cm / 18, \y * 10cm / 18)
+    circle [radius = 0.2575cm];
+}
+
+\long\def\Firstof#1#2\endFirstof{#1}
+
+\newcommand\thecolorofB{black}
+\newcommand\thecolorofAB{black}
+\newcommand\thecolorofW{white}
+\newcommand\thecolorofAW{white}
+
+\ignoreemptyitems
+\newcommand{\parseSgf}[1]{
+  \setsepchar{;||(||)/[||]}
+  \readlist*\Z{#1}
+
+  \foreachitem \i \in \Z[]{
+    \itemtomacro\Z[\icnt, 1]\Color
+    \itemtomacro\Z[\icnt, 2]\sgfCoords
+    \edef\tmp{{\csname thecolorof\Color\endcsname}{\sgfCoords}}
+
+    \ifthenelse{
+      \equal{\Color}{B}  \OR
+      \equal{\Color}{W}  \OR
+      \equal{\Color}{AB} \OR
+      \equal{\Color}{AW}
+    }{
+      \expandafter\drawStoneFromSgfCoords\tmp
+    }{}
+  }
+}
 
 \def\sgfA{;B[ab];W[cd]}
 \def\sgfB{(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05];B[as];W[bs];B[cs])}
 \def\sgfC{(;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05];B[as];W[bs];B[cs];PL[W]AB[dq]AW[eq])}
 
+
 \begin{document}
-  \begin{figure}[ht]
-    \begin{center}
-      \begin{tikzpicture}
-        \goGrid[board dimension = 10,
-                board size      = 19,
-                coords          = true,
-        ]
+  \begin{tikzpicture}
+    \pgfmathsetmacro{\step}{10 / 18}
 
-        \parseSgfB{\sgfA}
+    \draw[step=\step] (0, 0) grid (10, 10);
 
-        % \stone[color = black,
-        %        x     = 3,
-        %        y     = 3,]
-        % \stone[color = white,
-        %        x     = 4,
-        %        y     = 4,]
-        % \move[color = white,
-        %        x    = 5,
-        %        y    = 5,]
-
-        % \move[color = black,
-        %        x    = 6,
-        %        y    = 6,]
-
-        % \drawMove[color = black,
-        %           x     = 5,
-        %           y     = 5,]
-
-        % \drawStoneFromSgfCoords{black}{ab}
-        % \drawMoveFromSgfCoords{black}{cd}
-
-      \end{tikzpicture}
-      \caption{Goban 1}\label{my_goban_1}
-    \end{center}
-  \end{figure}
-
-
-  % \begin{figure}[ht]
-  %   \begin{center}
-  %     \begin{goban}[board dimension = 10,
-  %                   board size      = 19,
-  %                   coords          = true,
-  %     ]
-  %       % \drawStoneFromSgfCoords{black}{ab}
-  %       % \drawMoveFromSgfCoords{white}{de}
-  %       % \drawMoveFromSgfCoords{black}{cd}
-
-  %       % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
-  %       % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
-  %       \parseSgf{\sgfA}
-
-  %     \end{goban}
-  %     \caption{Goban 2}\label{my_goban_2}
-  %   \end{center}
-  % \end{figure}
-
-  % \parseSgfB{\sgfA}
+    % \drawStoneFromSgfCoords{black}{ab}
+    % \drawStoneFromSgfCoords{white}{cd}
+    
+    \parseSgf{\sgfC}
+  \end{tikzpicture}
 \end{document}
+
+% \begin{document}
+%   \begin{figure}[ht]
+%     \begin{center}
+%       \begin{tikzpicture}
+%         \goGrid[board dimension = 10,
+%                 board size      = 19,
+%                 coords          = true,
+%         ]
+
+%         \parseSgfB{\sgfA}
+
+%         % \stone[color = black,
+%         %        x     = 3,
+%         %        y     = 3,]
+%         % \stone[color = white,
+%         %        x     = 4,
+%         %        y     = 4,]
+%         % \move[color = white,
+%         %        x    = 5,
+%         %        y    = 5,]
+
+%         % \move[color = black,
+%         %        x    = 6,
+%         %        y    = 6,]
+
+%         % \drawMove[color = black,
+%         %           x     = 5,
+%         %           y     = 5,]
+
+%         % \drawStoneFromSgfCoords{black}{ab}
+%         % \drawMoveFromSgfCoords{black}{cd}
+
+%       \end{tikzpicture}
+%       \caption{Goban 1}\label{my_goban_1}
+%     \end{center}
+%   \end{figure}
+
+
+%   % \begin{figure}[ht]
+%   %   \begin{center}
+%   %     \begin{goban}[board dimension = 10,
+%   %                   board size      = 19,
+%   %                   coords          = true,
+%   %     ]
+%   %       % \drawStoneFromSgfCoords{black}{ab}
+%   %       % \drawMoveFromSgfCoords{white}{de}
+%   %       % \drawMoveFromSgfCoords{black}{cd}
+
+%   %       % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
+%   %       % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
+%   %       \parseSgf{\sgfA}
+
+%   %     \end{goban}
+%   %     \caption{Goban 2}\label{my_goban_2}
+%   %   \end{center}
+%   % \end{figure}
+
+%   % \parseSgfB{\sgfA}
+% \end{document}

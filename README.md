@@ -15,6 +15,7 @@ There are 3 main alternatives to doing this:
     - [x] Drawing labels
     - [ ] Partial Boards
     - [ ] Parse SGF
+    - [ ] Interactive Graphs
 
 > An honorable mention is [GoWrite2](https://gowrite.net/GOWrite2.html), which is what I've used in the past to create the diagrams in [this book translation](https://github.com/FanaroEngineering/traducao_como_jogar_go).
 

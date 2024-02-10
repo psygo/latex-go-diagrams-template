@@ -41,20 +41,21 @@
 
 \usepackage{listofitems}
 
+% From [this answer by @StevenB.Segletes](https://tex.stackexchange.com/a/709014/64441).
 \long\def\Firstof#1#2\endFirstof{#1}
 \ignoreemptyitems
-\newcommand{\parseSgfB}[1]{%
-  \setsepchar{;/[||]}%
-  \readlist*\Z{#1}%
+\newcommand{\parseSgfB}[1]{
+  \setsepchar{;/[||]}
+  \readlist*\Z{#1}
 
-  \foreachitem \i \in \Z[]{%
-    \itemtomacro\Z[\icnt,1]\color
-    \itemtomacro\Z[\icnt,2]\sgfCoords
+  \foreachitem \i \in \Z[]{
+    \itemtomacro\Z[\icnt, 1]\stoneColor
+    \itemtomacro\Z[\icnt, 2]\sgfCoords
 
-    \expandafter\if\expandafter\Firstof\color\endFirstof B
+    \expandafter\if\expandafter\Firstof\stoneColor\endFirstof B
       \drawStoneFromSgfCoords{black}{ab}
-    \else\expandafter\if\expandafter\Firstof\color\endFirstof W
+    \else\expandafter\if\expandafter\Firstof\stoneColor\endFirstof W
       \drawStoneFromSgfCoords{white}{cd}
     \fi\fi
-  }%
+  }
 }
