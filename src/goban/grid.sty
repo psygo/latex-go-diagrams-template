@@ -46,49 +46,18 @@
   \drawHoshis{\boardDimension}{\boardSize}{\step}
 }
 
-% Parameters
+% Reference: [Drawing a Non-Jagged Grid Outline](https://tex.stackexchange.com/q/709298/64441)
 %
-% 1: dimension (in cm)
-% 2: board size (square)
-% 3: step
-% 
-% Example: A 19x19 board with size 10cm x 10cm: `\drawHoshis{10}{19}{\step}`
-\newcommand{\drawHoshis}[3]{
-  \ifnum#2=9\relax
-    \foreach \sloc in {{3, 3}, {3, 7}, {7, 3}, {7, 7}, {5, 5}}{
-      \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
-      \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
-
-      \filldraw (\hoshiCoordX, \hoshiCoordY)
-        circle [radius=\step / 10];
-    }
-  \fi
-  % TODO: if bigger than 9x9, then it should be mathematically calculated...
-  %       Even at 9x9, at least the 4 outer hoshis can be mathematically calculated (though they are the 3-3, not the 4-4).
-}
-
 % Parameters
 %
 % 1: dimension (in cm)
 % 
 % Example: `\boardOutline{10}`
 \newcommand{\boardOutline}[1]{
-  \pgfmathsetmacro{\boardOutlineLineWidth}{0.8mm}
-  % Just so the board outline isn't jagged
-  \pgfmathsetmacro{\boardOutlinePadding}{\boardOutlineLineWidth * 0.0176}
-
-  % Top
-  \draw[black, line width = \boardOutlineLineWidth]
-    (-\boardOutlinePadding, #1) -- (#1 + \boardOutlinePadding, #1); % chktex 1 chktex 8
-  % Right
-  \draw[black, line width = \boardOutlineLineWidth] 
-    (#1, 0) -- (#1, #1); % chktex 8
-  % Bottom
-  \draw[black, line width = \boardOutlineLineWidth]
-    (-\boardOutlinePadding, 0) -- (#1 + \boardOutlinePadding, 0); % chktex 1 chktex 8
-  % Left
-  \draw[black, line width = \boardOutlineLineWidth]
-    (0, 0) -- (0, #1); % chktex 8
+  \draw[step       = #1,
+        line width = 0.7mm,
+        line cap   = rect] 
+    (0, 0) grid (#1, #1);
 }
 
 \newcounter{coordinateCounter}
@@ -133,4 +102,25 @@
     }
   }
   \setcounter{coordinateCounter}{1}
+}
+
+% Parameters
+%
+% 1: dimension (in cm)
+% 2: board size (square)
+% 3: step
+% 
+% Example: A 19x19 board with size 10cm x 10cm: `\drawHoshis{10}{19}{\step}`
+\newcommand{\drawHoshis}[3]{
+  \ifnum#2=9\relax
+    \foreach \sloc in {{3, 3}, {3, 7}, {7, 3}, {7, 7}, {5, 5}}{
+      \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
+      \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
+
+      \filldraw (\hoshiCoordX, \hoshiCoordY)
+        circle [radius=\step / 10];
+    }
+  \fi
+  % TODO: if bigger than 9x9, then it should be mathematically calculated...
+  %       Even at 9x9, at least the 4 outer hoshis can be mathematically calculated (though they are the 3-3, not the 4-4).
 }
