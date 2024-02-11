@@ -6,7 +6,7 @@ There are 3 main alternatives to doing this:
   - On my M2 Mac 2023, things don't seem to compile consistently with the 20+ years old documentation. The stones overlap a bit, and they seem to have somewhat pixelated borders.
 - [ ] [`igo`](https://www.ctan.org/tex-archive/fonts/igo)
   - Apparently, not only is `igo` difficult to install, but also [kind of dangerous to LaTeX itself](https://tex.stackexchange.com/a/652011/64441).
-- [ ] Creating a new Package with TikZ
+- [ ] Goban Package: Creating a new Package with TikZ
   - TikZ also offers a way of making this interactive, so we could achieve the same level of interactivity as [GoBooks](https://gobooks.com/)' EPUBs.
   - Desired Features:
     - [x] Different board sizes (grid and size itself)

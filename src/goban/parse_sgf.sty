@@ -1,61 +1,26 @@
-\ExplSyntaxOn
-  \cs_generate_variant:Nn \tl_set:Nn { Ne } % You might need to add this if the version of your TeX installation is not the most recent one 
-  \cs_generate_variant:Nn \seq_set_split:Nnn { Nne }
-
-  \NewDocumentCommand{\parseSgf}{ m }{
-    \tl_set:Ne \l_tmpa_tl { #1 }
-
-    % remove ( and ) from string
-    \tl_remove_all:Nn \l_tmpa_tl { ( }
-    \tl_remove_all:Nn \l_tmpa_tl { ) }
-
-    % store the contents of #1 in a sequence with ; as delimiter
-    \seq_set_split:Nne \l_tmpa_seq { ; } { \l_tmpa_tl }
-
-    % loop over all items in sequence
-    \seq_map_inline:Nn \l_tmpa_seq {
-      % split string at [ and store result in another sequence
-      \seq_set_split:Nne \l_tmpb_seq { [ } { ##1 }
-
-      \bool_if:nT { 
-        % test if first part of sequence is B or W
-        \str_if_eq_p:ee { \seq_item:Nn \l_tmpb_seq { 1 } } { B } ||
-        \str_if_eq_p:ee { \seq_item:Nn \l_tmpb_seq { 1 } } { W } 
-      } {
-        \tl_set:Ne \l_tmpa_tl { \seq_item:Nn \l_tmpb_seq { 1 } }
-        \tl_set:Ne \l_tmpb_tl { \seq_item:Nn \l_tmpb_seq { 2 } }
-
-        % remove ] from string
-        \tl_remove_all:Nn \l_tmpb_tl { ] }
-        
-        % \str_set_eq:NN \l_tmpa_tl \str_uppercase:n { black }
-
-        % \exp_args:NVV \drawStoneFromSgfCoords {black} {\l_tmpb_tl}
-        \exp_args:Noo \drawStoneFromSgfCoords \l_tmpa_tl \l_tmpb_tl
-        % \exp_args:NVV \drawStoneFromSgfCoords black ab
-        % Color: ~ \l_tmpa_tl {} ~ and ~ Coords: ~ \l_tmpb_tl
-      } 
-    }
-  }
-\ExplSyntaxOff
-
-\usepackage{listofitems}
-
-% From [this answer by @StevenB.Segletes](https://tex.stackexchange.com/a/709014/64441).
+% From [this](https://tex.stackexchange.com/a/709014/64441).
+% and [this](https://tex.stackexchange.com/a/709159/64441)
+% answers by @StevenB.Segletes.
 \long\def\Firstof#1#2\endFirstof{#1}
+
+\newcommand\thecolorofB{black}
+\newcommand\thecolorofW{white}
+
 \ignoreemptyitems
-\newcommand{\parseSgfB}[1]{
-  \setsepchar{;/[||]}
+\newcommand{\parseSgf}[1]{
+  \setsepchar{;||(||)/[||]}
   \readlist*\Z{#1}
 
   \foreachitem \i \in \Z[]{
-    \itemtomacro\Z[\icnt, 1]\stoneColor
+    \itemtomacro\Z[\icnt, 1]\Color
     \itemtomacro\Z[\icnt, 2]\sgfCoords
+    \edef\tmp{{\csname thecolorof\Color\endcsname}{\sgfCoords}}
 
-    \expandafter\if\expandafter\Firstof\stoneColor\endFirstof B
-      \drawStoneFromSgfCoords{black}{ab}
-    \else\expandafter\if\expandafter\Firstof\stoneColor\endFirstof W
-      \drawStoneFromSgfCoords{white}{cd}
-    \fi\fi
+    \ifthenelse{
+      \equal{\Color}{B} \OR
+      \equal{\Color}{W}
+    }{
+      \expandafter\drawStoneFromSgfCoords\tmp
+    }{}
   }
 }

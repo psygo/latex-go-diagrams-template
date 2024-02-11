@@ -25,7 +25,7 @@
     // ],
     // "latex-workshop.latex.recipe.default": "psgo-latex",
     //------------------------------------------------------
-    // File Explorer
+    // 2. File Explorer
     "files.exclude": {
         "**/*.aux": true,
         "**/*.dvi": true,
