@@ -147,6 +147,19 @@
   y               = 0,
 }
 
+% Parameters
+%
+% - color
+% - x coordinate
+% - y coordinate
+% 
+% Example:
+%
+% ```tex
+% \stone[color = black,
+%        x     = 3,
+%        y     = 3]
+% ```
 \newcommand{\stone}[1][]{
   \pgfkeys{/phili/stone/.cd, #1}
 
@@ -167,6 +180,19 @@
   \stepMoveCounter
 }
 
+% Parameters
+%
+% - color
+% - x coordinate
+% - y coordinate
+% 
+% Example:
+%
+% ```tex
+% \move[color = black,
+%        x     = 3,
+%        y     = 3]
+% ```
 \newcommand{\move}[1][]{
   \pgfkeys{/phili/stone/.cd, #1}
 
