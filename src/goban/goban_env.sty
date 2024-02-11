@@ -2,21 +2,32 @@
 \newcommand{\partialBoardClipping}[2]{
   \calculateStep{#1}{#2}
 
-  \clip (-1 * \step, - 1 * \step) rectangle 
+  \clip (-1 * \step, -1 * \step) rectangle 
       + (3 * \step,  3 * \step);
 }
 
 % Parameters
 %
-% 1: dimension (in cm)
-% 2: board size (square)
+% - board dimension (in cm)
+% - board size (square)
 % 
-% Example: A 19x19 board with size 10cm x 10cm: `\goban{10}{19}`
+% Example: A 19x19 board with size 10cm x 10cm:
+%
+% ```tex
+% \goban[board dimension = 10,
+%        board size      = 9
+% ]
+% ```
 \newenvironment{goban}[1][]{
   \begin{tikzpicture}[scale = 1, transform shape]
     \pgfkeys{/phili/goGrid/.cd, #1}
     
+    \calculateStep{\boardDimension}{\boardSize}
+    \clip (-1.5 * \step, -1.5 * \step) rectangle 
+        + (   5 * \step,    5 * \step);
+
     \goGrid
+
 }{
     \setcounter{moveCounter}{1}
   \end{tikzpicture}
