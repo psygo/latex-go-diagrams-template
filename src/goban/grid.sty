@@ -74,9 +74,9 @@
 % 
 % Example: `\boardOutline{10}`
 \newcommand{\boardOutline}[1]{
-  \pgfmathsetmacro{\boardOutlineLineWidth}{#1 * 5 / 1000}
+  \pgfmathsetmacro{\boardOutlineLineWidth}{0.8mm}
   % Just so the board outline isn't jagged
-  \pgfmathsetmacro{\boardOutlinePadding}{\boardOutlineLineWidth / 2}
+  \pgfmathsetmacro{\boardOutlinePadding}{\boardOutlineLineWidth * 0.0176}
 
   % Top
   \draw[black, line width = \boardOutlineLineWidth]
