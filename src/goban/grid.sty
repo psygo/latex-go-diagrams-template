@@ -100,39 +100,44 @@
 \newcommand{\coordinates}[3]{
   \pgfmathsetmacro{\leftRightShift}{1.9 * (\step cm / 2)}
   \pgfmathsetmacro{\topBottomShift}{1.8 * (\step cm / 2)}
+  
+  \def\customFont{\fontsize{\coordsFontSize}{5pt} \coordsFont}
 
   \foreach [count=\i] \l in {A, B, ..., Z} {
     \ifthenelse{\equal{\l}{I} \OR \i > \numexpr #2 + 1 \relax}{}{
-      \pgfmathsetmacro{\coordinateShift}{
+      \pgfmathsetmacro{\coordinateShiftVertical}{
          \step cm * (\thecoordinateCounter - 1)
+      }
+      \pgfmathsetmacro{\coordinateShiftHorizontal}{
+         \step cm * (\thecoordinateCounter - 1) - 1pt
       }
 
       \ifcoordsTop
         \draw[
-          xshift = \coordinateShift,
+          xshift = \coordinateShiftHorizontal,
           yshift = #1cm + \topBottomShift,
-          font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
+          font   = \customFont,
         ] node {\l};
       \fi
       \ifcoordsRight
         \draw[
           xshift = #1cm + \leftRightShift,
-          yshift = \coordinateShift,
-          font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
+          yshift = \coordinateShiftVertical,
+          font   = \customFont,
         ] node {\thecoordinateCounter};
       \fi
       \ifcoordsBottom
         \draw[
-          xshift = \coordinateShift,
-          yshift = -(\leftRightShift),
-          font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
+          xshift = \coordinateShiftHorizontal,
+          yshift = -\leftRightShift,
+          font   = \customFont,
         ] node {\l};
       \fi
-      \ifcoordsBottom
+      \ifcoordsLeft
         \draw[
-          xshift = -(\leftRightShift),
-          yshift = \coordinateShift,
-          font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
+          xshift = -\leftRightShift,
+          yshift = \coordinateShiftVertical,
+          font   = \customFont,
         ] node {\thecoordinateCounter};
       \fi
 
