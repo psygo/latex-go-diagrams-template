@@ -71,7 +71,7 @@
     \coordinates{\boardDimension}{\boardSize}{\step}
   \fi
 
-  \drawHoshis{\boardDimension}{\boardSize}{\step}
+  \drawHoshis
 }
 
 % Reference: [Drawing a Non-Jagged Grid Outline](https://tex.stackexchange.com/q/709298/64441)
@@ -154,14 +154,14 @@
 % 3: step
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\drawHoshis{10}{19}{\step}`
-\newcommand{\drawHoshis}[3]{
+\newcommand{\drawHoshis}{
   \tikzmath{
     \hoshiRadius = \step * 0.125;
     %
     \centerHoshi = ceil(\boardSize / 2);
     %
     int \hoshiDistance;
-    if \boardSize<10 then {
+    if \boardSize<12 then {
       \hoshiDistance = 3;
     } else {
       \hoshiDistance = 4;
@@ -171,10 +171,15 @@
   }
 
   \drawCenterHoshi
-  \ifnum#2>8\relax
+  \drawCornerHoshis
+  \ifnum\boardSize>6\relax
     \drawCornerHoshis
   \fi
-  \drawSideHoshis
+  \ifthenelse{\isodd{\boardSize}}{
+    \ifnum\boardSize>13\relax
+      \drawSideHoshis
+    \fi
+  }{}
 }
 
 \newcommand{\drawCenterHoshi}{
