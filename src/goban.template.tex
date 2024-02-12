@@ -38,58 +38,59 @@
   %   \end{center}
   % \end{figure}
 
-  \begin{tikzpicture}
-    \goGrid[board dimension = 5,
-            board size      = 16,
-            coords          = true]
+  % \begin{tikzpicture}
+  %   \goGrid[board dimension = 5,
+  %           board size      = 19,
+  %           coords          = true]
 
-    % \tikzmath{
-    %   \centerHoshi = (ceil(\boardSize / 2));
-    % }
-    % \pgfmathsetmacro{\hoshiComplement}{\boardSize - 2}
 
-    % \def\sideHoshiArray{%
-    %   {3, \centerHoshi},%
-    %   {\centerHoshi, \hoshiComplement},%
-    %   {\centerHoshi, 3},%
-    %   {\hoshiComplement, \centerHoshi}%
-    % }    
+  %   % \tikzmath{
+  %   %   \centerHoshi = (ceil(\boardSize / 2));
+  %   % }
+  %   % \pgfmathsetmacro{\hoshiComplement}{\boardSize - 2}
 
-    % \foreach \sloc in \sideHoshiArray {
-    %   \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
-    %   \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
+  %   % \def\sideHoshiArray{%
+  %   %   {3, \centerHoshi},%
+  %   %   {\centerHoshi, \hoshiComplement},%
+  %   %   {\centerHoshi, 3},%
+  %   %   {\hoshiComplement, \centerHoshi}%
+  %   % }    
+
+  %   % \foreach \sloc in \sideHoshiArray {
+  %   %   \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
+  %   %   \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
   
-    %   \filldraw (\hoshiCoordX, \hoshiCoordY)
-    %     circle [radius=\hoshiRadius];
-    % }
-  \end{tikzpicture}
+  %   %   \filldraw (\hoshiCoordX, \hoshiCoordY)
+  %   %     circle [radius=\hoshiRadius];
+  %   % }
+  % \end{tikzpicture}
   
-  % \begin{figure}[ht]
-  %   \begin{center}
-  %     \begin{goban}[board dimension    = 10,
-  %                   board size         = 9,
-  %                   scale              = 1,
-  %                   outline line width = 0.5mm,
-  %                   coords             = true,
-  %                   coords top         = false,
-  %                   coords right       = false,
-  %                   coords font        = \sffamily,
-  %                   coords font size   = 15pt]
-  %       \drawStoneFromSgfCoords{black}{ab}
-  %       \drawStoneFromSgfCoords{black}{aa}
-  %       % \drawStoneFromSgfCoords{white}{as}
-  %       % \drawStoneFromSgfCoords{black}{ar}
-  %       % \drawMoveFromSgfCoords{white}{de}
-  %       % \drawMoveFromSgfCoords{black}{cd}
+  \begin{figure}[ht]
+    \begin{center}
+      \begin{goban}[board dimension    = 10,
+                    board size         = 9,
+                    scale              = 1,
+                    outline line width = 0.5mm,
+                    coords             = true,
+                    coords top         = false,
+                    coords right       = false,
+                    coords font        = \sffamily,
+                    coords font size   = 15pt]
+        \drawStoneFromSgfCoords{black}{ab}
+        \drawStoneFromSgfCoords{black}{aa}
+        % \drawStoneFromSgfCoords{white}{as}
+        % \drawStoneFromSgfCoords{black}{ar}
+        % \drawMoveFromSgfCoords{white}{de}
+        % \drawMoveFromSgfCoords{black}{cd}
 
-  %       % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
-  %       % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
-  %       % \parseSgf{\sgfA}
+        % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
+        % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
+        % \parseSgf{\sgfA}
 
-  %     \end{goban}
-  %     \caption{Goban 2}\label{my_goban_2}
-  %   \end{center}
-  % \end{figure}
+      \end{goban}
+      \caption{Goban 2}\label{my_goban_2}
+    \end{center}
+  \end{figure}
 
   % \parseSgfB{\sgfA}
 \end{document}

@@ -1,11 +1,5 @@
-% Parameters
-%
-% 1: dimension (in cm)
-% 2: board size (square)
-% 
-% Example: A 19x19 board with size 10cm x 10cm: `\calculateStep{10}{19}`
-\newcommand{\calculateStep}[2]{
-  \pgfmathsetmacro{\step}{#1 / (#2 - 1)} % chktex 1
+\newcommand{\calculateStep}{
+  \pgfmathsetmacro{\step}{\boardDimension / (\boardSize - 1)} % chktex 1
 }
 
 \newif\ifcoords
@@ -54,13 +48,20 @@
 % Example: A 19x19 board with size 10cm x 10cm:
 %
 % ```tex
-% \goGrid[board dimension = 10,
-%         board size      = 9]
+% \goGrid[board dimension    = 10,
+%         board size         = 9,
+%         scale              = 1,
+%         outline line width = 0.5mm,
+%         coords             = true,
+%         coords top         = false,
+%         coords right       = false,
+%         coords font        = \sffamily,
+%         coords font size   = 15pt]
 % ```
 \newcommand{\goGrid}[1][]{
   \pgfkeys{/phili/goGrid/.cd, #1}
 
-  \calculateStep{\boardDimension}{\boardSize}
+  \calculateStep
 
   \draw[step=\step] (0, 0) grid
     (\boardDimension, \boardDimension);
@@ -68,7 +69,7 @@
   \boardOutline{\boardDimension}
   
   \ifcoords
-    \coordinates{\boardDimension}{\boardSize}{\step}
+    \coordinates
   \fi
 
   \drawHoshis
@@ -97,14 +98,14 @@
 % 3: step
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\coordinates{10}{19}{\step}`
-\newcommand{\coordinates}[3]{
+\newcommand{\coordinates}{
   \pgfmathsetmacro{\leftRightShift}{1.9 * (\step cm / 2)}
   \pgfmathsetmacro{\topBottomShift}{1.8 * (\step cm / 2)}
   
   \def\customFont{\fontsize{\coordsFontSize}{5pt} \coordsFont}
 
   \foreach [count=\i] \l in {A, B, ..., Z} {
-    \ifthenelse{\equal{\l}{I} \OR \i > \numexpr #2 + 1 \relax}{}{
+    \ifthenelse{\equal{\l}{I} \OR \i > \numexpr \boardSize + 1 \relax}{}{
       \pgfmathsetmacro{\coordinateShiftVertical}{
          \step cm * (\thecoordinateCounter - 1)
       }
@@ -115,13 +116,13 @@
       \ifcoordsTop
         \draw[
           xshift = \coordinateShiftHorizontal,
-          yshift = #1cm + \topBottomShift,
+          yshift = \boardDimension cm + \topBottomShift,
           font   = \customFont,
         ] node {\l};
       \fi
       \ifcoordsRight
         \draw[
-          xshift = #1cm + \leftRightShift,
+          xshift = \boardDimension cm + \leftRightShift,
           yshift = \coordinateShiftVertical,
           font   = \customFont,
         ] node {\thecoordinateCounter};
@@ -147,13 +148,7 @@
   \setcounter{coordinateCounter}{1}
 }
 
-% Parameters
-%
-% 1: dimension (in cm)
-% 2: board size (square)
-% 3: step
-% 
-% Example: A 19x19 board with size 10cm x 10cm: `\drawHoshis{10}{19}{\step}`
+% Example: A 19x19 board with size 10cm x 10cm: `\drawHoshis`
 \newcommand{\drawHoshis}{
   \tikzmath{
     \hoshiRadius = \step * 0.125;
@@ -190,14 +185,18 @@
 }
 
 \newcommand{\drawCornerHoshis}{
-  \def\cornerHoshiArray{%
+  \def\cornerHoshisArray{%
     {\hoshiDistance, \hoshiDistance},%
     {\hoshiComplement, \hoshiDistance},%
     {\hoshiDistance, \hoshiComplement },%
     {\hoshiComplement, \hoshiComplement}%
   }
 
-  \foreach \sloc in \cornerHoshiArray {
+  \loopOverHoshis{\cornerHoshisArray}
+}
+
+\newcommand{\loopOverHoshis}[1]{
+  \foreach \sloc in #1 {
     \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
     \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
 
@@ -207,18 +206,12 @@
 }
 
 \newcommand{\drawSideHoshis}{
-  \def\sideHoshiArray{%
+  \def\sideHoshisArray{%
     {\hoshiDistance, \centerHoshi},%
     {\centerHoshi, \hoshiComplement},%
     {\centerHoshi, \hoshiDistance},%
     {\hoshiComplement, \centerHoshi}%
   }    
 
-  \foreach \sloc in \sideHoshiArray {
-    \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
-    \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
-
-    \filldraw (\hoshiCoordX, \hoshiCoordY)
-      circle [radius=\hoshiRadius];
-  }
+  \loopOverHoshis{\sideHoshisArray}
 }
