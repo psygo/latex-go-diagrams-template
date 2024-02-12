@@ -10,12 +10,21 @@
 
 \newif\ifcoords
 
-\pgfkeys{/phili/goGrid/.cd, 
-  board dimension/.store in = \boardDimension,
-  board size/.store in      = \boardSize,
-  board dimension           = 10cm,
-  board size                = 19,
-  coords/.is if             = coords,
+% From [this answer by @UlrichDiez](https://tex.stackexchange.com/a/709341/64441).
+\pgfkeys{%
+  %---------------------------------------------------------
+  /phili/goGrid/.cd, 
+    board dimension/.store in = \boardDimension,
+    board size/.store in      = \boardSize,
+    board dimension           = 10cm,
+    board size                = 19,
+    coords/.is if             = coords,
+  %---------------------------------------------------------
+  /phili/goban/.search also={/phili/goGrid},
+  /phili/goban/.cd,  
+    scale/.store in         = \scale,
+    scale                   = 1,
+  %---------------------------------------------------------
 }
 
 % Parameters

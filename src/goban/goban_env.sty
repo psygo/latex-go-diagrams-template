@@ -18,15 +18,15 @@
 %        board size      = 9]
 % ```
 \newenvironment{goban}[1][]{
-  \begin{tikzpicture}[scale = 1, transform shape]
-    \pgfkeys{/phili/goGrid/.cd, #1}
-    
+  \pgfkeys{/phili/goban/.cd, #1}
+
+  \begin{tikzpicture}[scale = \scale, transform shape]
     \calculateStep{\boardDimension}{\boardSize}
-    \clip (-1.5 * \step, -1.5 * \step) rectangle 
-        + (   5 * \step,    5 * \step);
+
+    % \clip (-1.5 * \step, -1.5 * \step) rectangle 
+    %     + (   5 * \step,    5 * \step);
 
     \goGrid
-
 }{
     \setcounter{moveCounter}{1}
   \end{tikzpicture}
