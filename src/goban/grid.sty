@@ -9,21 +9,34 @@
 }
 
 \newif\ifcoords
+\newif\ifcoordsTop
+\newif\ifcoordsRight
+\newif\ifcoordsBottom
+\newif\ifcoordsLeft
 
 % From [this answer by @UlrichDiez](https://tex.stackexchange.com/a/709341/64441).
 \pgfkeys{%
   %---------------------------------------------------------
   /phili/goGrid/.cd, 
     board dimension/.store in    = \boardDimension,
-    board size/.store in         = \boardSize,
-    outline line width/.store in = \boardOutlineWidth,
-    coords font/.store in        = \coordsFont,
-    coords font size/.store in   = \coordsFontSize,
     board dimension              = 10cm,
+    board size/.store in         = \boardSize,
     board size                   = 19,
+    outline line width/.store in = \boardOutlineWidth,
     outline line width           = 0.7mm,
     coords/.is if                = coords,
+    coords                       = true,
+    coords top/.is if            = coordsTop,
+    coords top                   = true,
+    coords right/.is if          = coordsRight,
+    coords right                 = true,
+    coords bottom/.is if         = coordsBottom,
+    coords bottom                = true,
+    coords left/.is if           = coordsLeft,
+    coords left                  = true,
+    coords font/.store in        = \coordsFont,
     coords font                  = ,
+    coords font size/.store in   = \coordsFontSize,
     coords font size             = 10pt,
   %---------------------------------------------------------
   /phili/goban/.search also={/phili/goGrid},
@@ -90,32 +103,38 @@
 
   \foreach [count=\i] \l in {A, B, ..., Z} {
     \ifthenelse{\equal{\l}{I} \OR \i > \numexpr #2 + 1 \relax}{}{
-      \pgfmathsetmacro{\coordinateShift}{#3cm * (\thecoordinateCounter - 1)}
+      \pgfmathsetmacro{\coordinateShift}{
+         \step cm * (\thecoordinateCounter - 1)
+      }
 
-      % Top
-      \draw[
-        xshift = \coordinateShift,
-        yshift = #1cm + \topBottomShift,
-        font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
-      ] node {\l};
-      % Right
-      \draw[
-        xshift = #1cm + \leftRightShift,
-        yshift = \coordinateShift,
-        font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
-      ] node {\thecoordinateCounter};
-      % Bottom
-      \draw[
-        xshift = \coordinateShift,
-        yshift = -(\leftRightShift),
-        font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
-      ] node {\l};
-      % Left
-      \draw[
-        xshift = -(\leftRightShift),
-        yshift = \coordinateShift,
-        font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
-      ] node {\thecoordinateCounter};
+      \ifcoordsTop
+        \draw[
+          xshift = \coordinateShift,
+          yshift = #1cm + \topBottomShift,
+          font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
+        ] node {\l};
+      \fi
+      \ifcoordsRight
+        \draw[
+          xshift = #1cm + \leftRightShift,
+          yshift = \coordinateShift,
+          font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
+        ] node {\thecoordinateCounter};
+      \fi
+      \ifcoordsBottom
+        \draw[
+          xshift = \coordinateShift,
+          yshift = -(\leftRightShift),
+          font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
+        ] node {\l};
+      \fi
+      \ifcoordsBottom
+        \draw[
+          xshift = -(\leftRightShift),
+          yshift = \coordinateShift,
+          font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
+        ] node {\thecoordinateCounter};
+      \fi
 
       \stepcounter{coordinateCounter}
     }
