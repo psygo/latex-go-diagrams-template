@@ -14,16 +14,22 @@
 \pgfkeys{%
   %---------------------------------------------------------
   /phili/goGrid/.cd, 
-    board dimension/.store in = \boardDimension,
-    board size/.store in      = \boardSize,
-    board dimension           = 10cm,
-    board size                = 19,
-    coords/.is if             = coords,
+    board dimension/.store in    = \boardDimension,
+    board size/.store in         = \boardSize,
+    outline line width/.store in = \boardOutlineWidth,
+    coords font/.store in        = \coordsFont,
+    coords font size/.store in   = \coordsFontSize,
+    board dimension              = 10cm,
+    board size                   = 19,
+    outline line width           = 0.7mm,
+    coords/.is if                = coords,
+    coords font                  = ,
+    coords font size             = 10pt,
   %---------------------------------------------------------
   /phili/goban/.search also={/phili/goGrid},
   /phili/goban/.cd,  
-    scale/.store in         = \scale,
-    scale                   = 1,
+    scale/.store in              = \scale,
+    scale                        = 1,
   %---------------------------------------------------------
 }
 
@@ -64,7 +70,7 @@
 % Example: `\boardOutline{10}`
 \newcommand{\boardOutline}[1]{
   \draw[step       = #1,
-        line width = 0.7mm,
+        line width = \boardOutlineWidth,
         line cap   = rect] 
     (0, 0) grid (#1, #1);
 }
@@ -79,8 +85,8 @@
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\coordinates{10}{19}{\step}`
 \newcommand{\coordinates}[3]{
-  \pgfmathsetmacro{\leftRightShift}{#3cm / 1.4}
-  \pgfmathsetmacro{\topBottomShift}{#3cm / 1.5}
+  \pgfmathsetmacro{\leftRightShift}{1.9 * (\step cm / 2)}
+  \pgfmathsetmacro{\topBottomShift}{1.8 * (\step cm / 2)}
 
   \foreach [count=\i] \l in {A, B, ..., Z} {
     \ifthenelse{\equal{\l}{I} \OR \i > \numexpr #2 + 1 \relax}{}{
@@ -90,21 +96,25 @@
       \draw[
         xshift = \coordinateShift,
         yshift = #1cm + \topBottomShift,
+        font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
       ] node {\l};
       % Right
       \draw[
         xshift = #1cm + \leftRightShift,
         yshift = \coordinateShift,
+        font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
       ] node {\thecoordinateCounter};
       % Bottom
       \draw[
         xshift = \coordinateShift,
         yshift = -(\leftRightShift),
+        font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
       ] node {\l};
       % Left
       \draw[
         xshift = -(\leftRightShift),
         yshift = \coordinateShift,
+        font   = \fontsize{\coordsFontSize}{5pt} \coordsFont,
       ] node {\thecoordinateCounter};
 
       \stepcounter{coordinateCounter}
