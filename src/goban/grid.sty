@@ -12,12 +12,18 @@
 \pgfkeys{%
   %---------------------------------------------------------
   /phili/goGrid/.cd, 
+    %-------------------------------------------------------
+    % Dimensions
     board dimension/.store in    = \boardDimension,
     board dimension              = 10cm,
     board size/.store in         = \boardSize,
     board size                   = 19,
+    %-------------------------------------------------------
+    % Outline
     outline line width/.store in = \boardOutlineWidth,
     outline line width           = 0.7mm,
+    %-------------------------------------------------------
+    % Coordinates
     coords/.is if                = coords,
     coords                       = true,
     coords top/.is if            = coordsTop,
@@ -32,11 +38,24 @@
     coords font                  = ,
     coords font size/.store in   = \coordsFontSize,
     coords font size             = 10pt,
+    %-------------------------------------------------------
   %---------------------------------------------------------
   /phili/goban/.search also={/phili/goGrid},
   /phili/goban/.cd,  
+    %-------------------------------------------------------
+    % Scale
     scale/.store in              = \scale,
     scale                        = 1,
+    %-------------------------------------------------------
+    % Partial Boards
+    horizontal clip start/.store in = \horClipStart,
+    horizontal clip start           = 0,
+    horizontal clip end/.store in   = \horClipEnd,
+    horizontal clip end             = 0,
+    vertical clip start/.store in   = \verClipStart,
+    vertical clip start             = 0,
+    vertical clip end/.store in     = \verClipEnd,
+    vertical clip end               = 0,
   %---------------------------------------------------------
 }
 

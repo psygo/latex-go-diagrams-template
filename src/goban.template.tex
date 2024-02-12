@@ -2,7 +2,6 @@
 
 \usepackage{./goban/goban}
 
-
 \begin{document}
   % \begin{figure}[ht]
   %   \begin{center}
@@ -67,15 +66,20 @@
   
   \begin{figure}[ht]
     \begin{center}
-      \begin{goban}[board dimension    = 10,
-                    board size         = 9,
-                    scale              = 1,
-                    outline line width = 0.5mm,
-                    coords             = true,
-                    coords top         = false,
-                    coords right       = false,
-                    coords font        = \sffamily,
-                    coords font size   = 15pt]
+      \begin{goban}[board dimension       = 10,
+                    board size            = 9,
+                    scale                 = 1,
+                    outline line width    = 0.5mm,
+                    coords                = true,
+                    coords top            = false,
+                    coords right          = false,
+                    coords font           = \sffamily,
+                    coords font size      = 15pt,
+                    horizontal clip start = 1,
+                    horizontal clip end   = 3,
+                    vertical clip start   = 1,
+                    vertical clip end     = 3]
+
         \drawStoneFromSgfCoords{black}{ab}
         \drawStoneFromSgfCoords{black}{aa}
         % \drawStoneFromSgfCoords{white}{as}

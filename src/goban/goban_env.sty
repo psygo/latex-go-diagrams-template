@@ -1,30 +1,23 @@
 % TODO: There should be an extra clipping for only the remaining coordinates
-\newcommand{\partialBoardClipping}[2]{
-  \calculateStep{#1}{#2}
+\newcommand{\partialBoardClipping}{
+  \tikzmath{
+    \horStart = (-2.5 + \horClipStart) * \step;
+    \horEnd = (1 + \horClipEnd) * \step;
+    \verStart = (-3.5 + \verClipStart) * \step;
+    \verEnd = (2 + \verClipEnd) * \step;
+  }
 
-  \clip (-1 * \step, -1 * \step) rectangle 
-      + (3 * \step,  3 * \step);
+  \clip (\horStart, \verStart) rectangle + 
+        (\horEnd, \verEnd);
 }
 
-% Parameters
-%
-% - board dimension (in cm)
-% - board size (square)
-% 
-% Example: A 19x19 board with size 10cm x 10cm:
-%
-% ```tex
-% \goban[board dimension = 10,
-%        board size      = 9]
-% ```
 \newenvironment{goban}[1][]{
   \pgfkeys{/phili/goban/.cd, #1}
 
   \begin{tikzpicture}[scale = \scale, transform shape]
     \calculateStep
 
-    % \clip (-1.5 * \step, -1.5 * \step) rectangle 
-    %     + (   5 * \step,    5 * \step);
+    \partialBoardClipping
 
     \goGrid
 }{
