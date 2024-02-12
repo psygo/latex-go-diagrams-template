@@ -2,6 +2,7 @@
 
 \usepackage{./goban/goban}
 
+
 \begin{document}
   % \begin{figure}[ht]
   %   \begin{center}
@@ -11,19 +12,19 @@
   %               coords          = true]
 
   %       % \parseSgfB{\sgfA}
-  %       \stone[color = black,
-  %              x     = 3,
-  %              y     = 3,]
-  %       \stone[color = white,
-  %              x     = 4,
-  %              y     = 4,]
-  %       \move[color = white,
-  %              x    = 5,
-  %              y    = 5,]
+  %       % \stone[color = black,
+  %       %        x     = 3,
+  %       %        y     = 3,]
+  %       % \stone[color = white,
+  %       %        x     = 4,
+  %       %        y     = 4,]
+  %       % \move[color = white,
+  %       %        x    = 5,
+  %       %        y    = 5,]
 
-  %       \move[color = black,
-  %              x    = 6,
-  %              y    = 6,]
+  %       % \move[color = black,
+  %       %        x    = 6,
+  %       %        y    = 6,]
 
   %       % \drawMove[color = black,
   %       %           x     = 5,
@@ -37,32 +38,57 @@
   %   \end{center}
   % \end{figure}
 
-  \begin{figure}[ht]
-    \begin{center}
-      \begin{goban}[board dimension    = 10,
-                    board size         = 9,
-                    scale              = 1,
-                    outline line width = 0.5mm,
-                    coords             = true,
-                    coords top         = false,
-                    coords right       = false,
-                    coords font        = \sffamily,
-                    coords font size   = 15pt]
-        \drawStoneFromSgfCoords{black}{ab}
-        \drawStoneFromSgfCoords{black}{aa}
-        % \drawStoneFromSgfCoords{white}{as}
-        % \drawStoneFromSgfCoords{black}{ar}
-        % \drawMoveFromSgfCoords{white}{de}
-        % \drawMoveFromSgfCoords{black}{cd}
+  \begin{tikzpicture}
+    \goGrid[board dimension = 5,
+            board size      = 19,
+            coords          = true]
+    % \tikzmath{
+    %   \centerHoshi = (ceil(\boardSize / 2));
+    % }
+    % \pgfmathsetmacro{\hoshiComplement}{\boardSize - 2}
 
-        % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
-        % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
-        % \parseSgf{\sgfA}
+    % \def\sideHoshiArray{%
+    %   {3, \centerHoshi},%
+    %   {\centerHoshi, \hoshiComplement},%
+    %   {\centerHoshi, 3},%
+    %   {\hoshiComplement, \centerHoshi}%
+    % }    
 
-      \end{goban}
-      \caption{Goban 2}\label{my_goban_2}
-    \end{center}
-  \end{figure}
+    % \foreach \sloc in \sideHoshiArray {
+    %   \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
+    %   \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
+  
+    %   \filldraw (\hoshiCoordX, \hoshiCoordY)
+    %     circle [radius=\hoshiRadius];
+    % }
+  \end{tikzpicture}
+  
+  % \begin{figure}[ht]
+  %   \begin{center}
+  %     \begin{goban}[board dimension    = 10,
+  %                   board size         = 9,
+  %                   scale              = 1,
+  %                   outline line width = 0.5mm,
+  %                   coords             = true,
+  %                   coords top         = false,
+  %                   coords right       = false,
+  %                   coords font        = \sffamily,
+  %                   coords font size   = 15pt]
+  %       \drawStoneFromSgfCoords{black}{ab}
+  %       \drawStoneFromSgfCoords{black}{aa}
+  %       % \drawStoneFromSgfCoords{white}{as}
+  %       % \drawStoneFromSgfCoords{black}{ar}
+  %       % \drawMoveFromSgfCoords{white}{de}
+  %       % \drawMoveFromSgfCoords{black}{cd}
+
+  %       % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
+  %       % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
+  %       % \parseSgf{\sgfA}
+
+  %     \end{goban}
+  %     \caption{Goban 2}\label{my_goban_2}
+  %   \end{center}
+  % \end{figure}
 
   % \parseSgfB{\sgfA}
 \end{document}

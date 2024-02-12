@@ -155,15 +155,65 @@
 % 
 % Example: A 19x19 board with size 10cm x 10cm: `\drawHoshis{10}{19}{\step}`
 \newcommand{\drawHoshis}[3]{
-  \ifnum#2=9\relax
-    \foreach \sloc in {{3, 3}, {3, 7}, {7, 3}, {7, 7}, {5, 5}}{
-      \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
-      \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
+  \tikzmath{
+    \hoshiRadius = \step * 0.125;
+    %
+    \centerHoshi = ceil(\boardSize / 2);
+    %
+    int \hoshiDistance;
+    if \boardSize<10 then {
+      \hoshiDistance = 3;
+    } else {
+      \hoshiDistance = 4;
+    };
+    %
+    \hoshiComplement = \boardSize - \hoshiDistance + 1;
+  }
 
-      \filldraw (\hoshiCoordX, \hoshiCoordY)
-        circle [radius=\step / 10];
-    }
+  \drawCenterHoshi
+  \ifnum#2>8\relax
+    \drawCornerHoshis
   \fi
-  % TODO: if bigger than 9x9, then it should be mathematically calculated...
-  %       Even at 9x9, at least the 4 outer hoshis can be mathematically calculated (though they are the 3-3, not the 4-4).
+  \drawSideHoshis
+}
+
+\newcommand{\drawCenterHoshi}{
+  \pgfmathsetmacro{\centerHoshiCoord}{(\centerHoshi - 1) * \step}
+
+  \filldraw (\centerHoshiCoord, \centerHoshiCoord)
+    circle [radius=\hoshiRadius];
+}
+
+\newcommand{\drawCornerHoshis}{
+  \def\cornerHoshiArray{%
+    {\hoshiDistance, \hoshiDistance},%
+    {\hoshiComplement, \hoshiDistance},%
+    {\hoshiDistance, \hoshiComplement },%
+    {\hoshiComplement, \hoshiComplement}%
+  }
+
+  \foreach \sloc in \cornerHoshiArray {
+    \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
+    \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
+
+    \filldraw (\hoshiCoordX, \hoshiCoordY)
+      circle [radius=\hoshiRadius];
+  }
+}
+
+\newcommand{\drawSideHoshis}{
+  \def\sideHoshiArray{%
+    {\hoshiDistance, \centerHoshi},%
+    {\centerHoshi, \hoshiComplement},%
+    {\centerHoshi, \hoshiDistance},%
+    {\hoshiComplement, \centerHoshi}%
+  }    
+
+  \foreach \sloc in \sideHoshiArray {
+    \pgfmathsetmacro{\hoshiCoordX}{\step * ({\sloc}[0] - 1)}
+    \pgfmathsetmacro{\hoshiCoordY}{\step * ({\sloc}[1] - 1)}
+
+    \filldraw (\hoshiCoordX, \hoshiCoordY)
+      circle [radius=\hoshiRadius];
+  }
 }
