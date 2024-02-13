@@ -121,7 +121,7 @@
   \pgfmathsetmacro{\leftRightShift}{1.9 * (\step cm / 2)}
   \pgfmathsetmacro{\topBottomShift}{1.8 * (\step cm / 2)}
   
-  \def\customFont{\fontsize{\coordsFontSize}{5pt} \coordsFont}
+  \def\coordinatesFont{\fontsize{\coordsFontSize}{5pt} \coordsFont}
 
   \foreach [count=\i] \l in {A, B, ..., Z} {
     \ifthenelse{\equal{\l}{I} \OR \i > \numexpr \boardSize + 1 \relax}{}{
@@ -136,28 +136,28 @@
         \draw[
           xshift = \coordinateShiftHorizontal,
           yshift = \boardDimension cm + \topBottomShift,
-          font   = \customFont,
+          font   = \coordinatesFont,
         ] node {\l};
       \fi
       \ifcoordsRight
         \draw[
           xshift = \boardDimension cm + \leftRightShift,
           yshift = \coordinateShiftVertical,
-          font   = \customFont,
+          font   = \coordinatesFont,
         ] node {\thecoordinateCounter};
       \fi
       \ifcoordsBottom
         \draw[
           xshift = \coordinateShiftHorizontal,
           yshift = -\leftRightShift,
-          font   = \customFont,
+          font   = \coordinatesFont,
         ] node {\l};
       \fi
       \ifcoordsLeft
         \draw[
           xshift = -\leftRightShift,
           yshift = \coordinateShiftVertical,
-          font   = \customFont,
+          font   = \coordinatesFont,
         ] node {\thecoordinateCounter};
       \fi
 

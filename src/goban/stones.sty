@@ -17,7 +17,7 @@
   \stepcounter{moveCounter}
 }
 
-% From [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708893/64441).
+% Adapted from [this answer by @DavidCarlisle](https://tex.stackexchange.com/a/708893/64441).
 \ExplSyntaxOn
   \cs_generate_variant:Nn \int_from_alph:n {e}
 
@@ -32,85 +32,102 @@
 %-----------------------------------------------------------
 % Labels
 
-% Parameters:
-%
-% 1: Color
-%
-% Example usage: `\triangleLabel{black}`
-\newcommand{\triangleLabel}[1]{
-  \pgfmathsetmacro{\triangleYCoord}{\yCoord - \stoneRadius * 0.075}
+\pgfkeys{%
+  /phili/shapeLabel/.cd, 
+    outline color/.store in = \shapeLabelOutlineColor,
+    outline color           = black,
+    outline width/.store in = \shapeLabelOutlineWidth,
+    outline width           = 0.3mm,
+    fill color/.store in    = \shapeLabelFillColor,
+    fill color              = white,
+}
+
+\newcommand{\triangleLabel}[1][]{
+  \pgfkeys{/phili/shapeLabel/.cd, #1}
+  
+  \pgfmathsetmacro{\triangleYCoord}{\yCoord - \stoneRadius * 0.05}
   \pgfmathsetmacro{\triangleSize}{\stoneRadius * 30}
 
   \draw (\xCoord, \triangleYCoord) node[
     isosceles triangle,
-    draw = \UseName{not#1},
-    fill = #1, 
-    rotate = 90,
+    draw                          = \shapeLabelOutlineColor,
+    line width                    = \shapeLabelOutlineWidth,
+    fill                          = \shapeLabelFillColor,
+    minimum height                = \triangleSize,
+    minimum width                 = \triangleSize,
+    rotate                        = 90,
     isosceles triangle apex angle = 60,
-    inner sep = 0pt,
-    minimum height = \triangleSize,
-    minimum width = \triangleSize,
+    inner sep                     = 0pt,
   ] {};
 }
 
-% Parameters:
-%
-% 1: Color
-%
-% Example usage: `\squareLabel{black}`
-\newcommand{\squareLabel}[1]{
+\newcommand{\squareLabel}[1][]{
+  \pgfkeys{/phili/shapeLabel/.cd, #1}
+
   \pgfmathsetmacro{\squareSize}{\stoneRadius * 30}
 
   \draw (\xCoord, \yCoord) node[
-    draw = \UseName{not#1},
-    fill = #1, 
-    inner sep = 0pt,
+    draw         = \shapeLabelOutlineColor,
+    line width   = \shapeLabelOutlineWidth,
+    fill         = \shapeLabelFillColor,
     minimum size = \squareSize,
+    inner sep    = 0pt,
   ] {}; 
 }
 
-% Parameters:
-%
-% 1: Color
-%
-% Example usage: `\circleLabel{black}`
-\newcommand{\circleLabel}[1]{
+\newcommand{\circleLabel}[1][]{
+  \pgfkeys{/phili/shapeLabel/.cd, #1}
+
   \pgfmathsetmacro{\circleSize}{\stoneRadius * 0.5}
 
   \draw[
-    draw = \UseName{not#1},
-    fill = #1, 
-    line width = \outlineWidth
+    draw       = \shapeLabelOutlineColor,
+    line width = \shapeLabelOutlineWidth,
+    fill       = \shapeLabelFillColor,
+    inner sep  = 0pt,
   ]
     (\xCoord, \yCoord)
     circle [radius = \circleSize];
 }
 
-% Parameters:
-%
-% 1: Color
-%
-% Example usage: `\crossLabel{black}`
-\newcommand{\crossLabel}[1]{
-  \draw (\xCoord, \yCoord) 
-    node[
-      color = \UseName{not#1},
-      font = \sffamily,
-    ] {X};
+\pgfkeys{%
+  /phili/textLabel/.cd, 
+    font color/.store in  = \textLabelFontColor,
+    font color            = black,
+    font size/.store in   = \textLabelFontSize,
+    font size             = 10pt,
+    font family/.store in = \textLabelFontFamily,
+    font family           = ,
+    text/.store in        = \textLabelText,
+    text                  = A,
 }
 
-% Parameters:
-%
-% 1: Color
-% 2: Text
-%
-% Example usage: `\crossLabel{black}{A}`
-\newcommand{\textLabel}[2]{
-  \draw (\xCoord, \yCoord)
+\newcommand{\textLabel}[1][]{
+  \pgfkeys{/phili/textLabel/.cd, #1}
+  
+  \def\textLabelFont{\fontsize{\textLabelFontSize}{0} \textLabelFontFamily}
+
+  \draw (\xCoord - 0.08 * \step, \yCoord)
     node[
-      % TODO: Change fontsize if the number goes beyond 99.
-      color = \UseName{not#1},
-    ] {#2};
+      font  = \textLabelFont,
+      color = \textLabelFontColor,
+    ] {\textLabelText};
+}
+
+\pgfkeys{%
+  /phili/crossLabel/.cd, 
+    color/.store in = \crossLabelColor,
+    color           = black,
+}
+
+\newcommand{\crossLabel}[1][]{
+  \pgfkeys{/phili/crossLabel/.cd, #1}
+
+  \draw (\xCoord, \yCoord) 
+    node[
+      color = \crossLabelColor,
+      font  = \sffamily,
+    ] {X};
 }
 
 %-----------------------------------------------------------
@@ -175,7 +192,6 @@
 % Example: `\drawMove{black}{2}{3}`
 \newcommand{\drawMove}[3]{
   \drawStone{#1}{#2}{#3}
-  \textLabel{#1}{\themoveCounter}
 
   \stepMoveCounter
 }
