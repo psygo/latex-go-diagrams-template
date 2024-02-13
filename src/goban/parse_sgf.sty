@@ -1,26 +1,35 @@
-% From [this](https://tex.stackexchange.com/a/709014/64441).
+% From [this](https://tex.stackexchange.com/a/709014/64441),
+% [this](https://tex.stackexchange.com/a/709324/64441),
 % and [this](https://tex.stackexchange.com/a/709159/64441)
 % answers by @StevenB.Segletes.
 \long\def\Firstof#1#2\endFirstof{#1}
 
 \newcommand\thecolorofB{black}
+\newcommand\thecolorofAB{black}
 \newcommand\thecolorofW{white}
+\newcommand\thecolorofAW{white}
+
+\long\def\Keytypeof#1{\csname thekeytypeof#1\endcsname}
+
+\newcommand\thekeytypeofB{C}% C DENOTING A "COLOR" KEY
+\newcommand\thekeytypeofAB{C}
+\newcommand\thekeytypeofW{C}
+\newcommand\thekeytypeofAW{C}
 
 \ignoreemptyitems
-\newcommand{\parseSgf}[1]{
-  \setsepchar{;||(||)/[||]}
-  \readlist*\Z{#1}
 
-  \foreachitem \i \in \Z[]{
-    \itemtomacro\Z[\icnt, 1]\Color
-    \itemtomacro\Z[\icnt, 2]\sgfCoords
-    \edef\tmp{{\csname thecolorof\Color\endcsname}{\sgfCoords}}
+\newcommand{\parseSgf}[1]{%
+  \setsepchar{;||(||)/]/[}%
+  \readlist*\Z{#1}%
 
-    \ifthenelse{
-      \equal{\Color}{B} \OR
-      \equal{\Color}{W}
-    }{
-      \expandafter\drawStoneFromSgfCoords\tmp
-    }{}
-  }
+  \foreachitem \i \in \Z[]{%
+    \foreachitem \z \in \Z[\icnt]{%
+      \itemtomacro\Z[\icnt, \zcnt, 1]\KeyName
+      \itemtomacro\Z[\icnt, \zcnt, 2]\KeyValue
+
+      \if\Keytypeof\KeyName C%
+        \edef\tmp{{\csname thecolorof\KeyName\endcsname}{\KeyValue}}%
+        \expandafter\drawStoneFromSgfCoords\tmp
+      \fi
+  }}%
 }

@@ -64,10 +64,25 @@
   %   % }
   % \end{tikzpicture}
   
+  \def\sgfA{;B[ab];W[cd]}
+  \def\sgfB{(
+    ;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05]
+    ;B[as]
+    ;W[bs]
+    ;B[cs]
+  )}
+  \def\sgfC{(
+    ;GM[1]FF[4]CA[UTF-8]AP[Sabaki:0.52.2]KM[6.5]SZ[19]DT[2024-02-05]
+    ;B[as]
+    ;W[bs]
+    ;B[cs]
+    ;PL[W]AB[dq]AW[eq]
+  )}
+
   \begin{figure}[ht]
     \begin{center}
       \begin{goban}[board dimension       = 10,
-                    board size            = 9,
+                    board size            = 19,
                     scale                 = 1,
                     outline line width    = 0.5mm,
                     coords                = false,
@@ -77,12 +92,12 @@
                     coords left           = false,
                     coords font           = \sffamily,
                     coords font size      = 15pt,
-                    horizontal clip start = 2,
-                    horizontal clip end   = 4,
-                    vertical clip start   = 3,
-                    vertical clip end     = 2]
-        \drawStoneFromSgfCoords{black}{ab}
-        \drawStoneFromSgfCoords{black}{aa}
+                    horizontal clip start = 1,
+                    horizontal clip end   = 19,
+                    vertical clip start   = 1,
+                    vertical clip end     = 19]
+        % \drawStoneFromSgfCoords{black}{ab}
+        % \drawStoneFromSgfCoords{black}{aa}
         % \drawStoneFromSgfCoords{white}{as}
         % \drawStoneFromSgfCoords{black}{ar}
         % \drawMoveFromSgfCoords{white}{de}
@@ -90,7 +105,7 @@
 
         % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
         % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
-        % \parseSgf{\sgfA}
+        \parseSgf{\sgfC}
 
       \end{goban}
       \caption{Goban 2}\label{my_goban_2}
