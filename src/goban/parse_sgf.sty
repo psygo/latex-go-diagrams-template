@@ -11,24 +11,28 @@
 
 \long\def\Keytypeof#1{\csname thekeytypeof#1\endcsname}
 
-\newcommand\thekeytypeofB{C}% C DENOTING A "COLOR" KEY
-\newcommand\thekeytypeofAB{C}
-\newcommand\thekeytypeofW{C}
-\newcommand\thekeytypeofAW{C}
+\newcommand\thekeytypeofB{M}
+\newcommand\thekeytypeofAB{A}
+\newcommand\thekeytypeofW{M}
+\newcommand\thekeytypeofAW{A}
 
 \ignoreemptyitems
 
-\newcommand{\parseSgf}[1]{%
-  \setsepchar{;||(||)/]/[}%
-  \readlist*\Z{#1}%
+\newcommand{\parseSgf}[1]{
+  \setsepchar{;||(||)/]/[}
+  \readlist*\Z{#1}
 
-  \foreachitem \i \in \Z[]{%
-    \foreachitem \z \in \Z[\icnt]{%
+  \foreachitem \i \in \Z[]{
+    \foreachitem \z \in \Z[\icnt]{
       \itemtomacro\Z[\icnt, \zcnt, 1]\KeyName
       \itemtomacro\Z[\icnt, \zcnt, 2]\KeyValue
 
-      \if\Keytypeof\KeyName C%
-        \edef\tmp{{\csname thecolorof\KeyName\endcsname}{\KeyValue}}%
+      \edef\tmp{{\csname thecolorof\KeyName\endcsname}{\KeyValue}}
+      \if\Keytypeof\KeyName M
+        \expandafter\drawMoveFromSgfCoords\tmp
+      \fi
+      \if\Keytypeof\KeyName A
+        \edef\tmp{{\csname thecolorof\KeyName\endcsname}{\KeyValue}}
         \expandafter\drawStoneFromSgfCoords\tmp
       \fi
   }}%
