@@ -147,9 +147,9 @@
   \pgfmathsetmacro{\stoneRadius}{\step * \ifStrEq{black}{#1}{0.99}{0.95} / 2}
 
   \draw[
-    draw = \UseName{not#1},
-    fill = #1, 
-    line width = \outlineWidth
+    draw       = \UseName{not#1},
+    fill       = #1, 
+    line width = \outlineWidth,
   ]
     (\xCoord, \yCoord)
     circle [radius = \stoneRadius];
@@ -192,6 +192,8 @@
 % Example: `\drawMove{black}{2}{3}`
 \newcommand{\drawMove}[3]{
   \drawStone{#1}{#2}{#3}
+  \textLabel[text       = \themoveCounter,
+             font color = \UseName{not#1}]
 
   \stepMoveCounter
 }
@@ -206,8 +208,8 @@
 %
 % ```tex
 % \move[color = black,
-%        x     = 3,
-%        y     = 3]
+%       x     = 3,
+%       y     = 3]
 % ```
 \newcommand{\move}[1][]{
   \pgfkeys{/phili/stone/.cd, #1}
