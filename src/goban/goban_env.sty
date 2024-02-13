@@ -1,14 +1,24 @@
-% TODO: There should be an extra clipping for only the remaining coordinates
+% TODO: I'll probably have to rework everything, but at some
+%       point it would be nice to have partial boards with
+%       coordinates.
+% This only works well if without coordinates.
 \newcommand{\partialBoardClipping}{
-  \tikzmath{
-    \horStart = (-2.5 + \horClipStart) * \step;
-    \horEnd = (1 + \horClipEnd) * \step;
-    \verStart = (-3.5 + \verClipStart) * \step;
-    \verEnd = (2 + \verClipEnd) * \step;
-  }
+  \ifthenelse{
+    \equal{\horClipStart}{-1} \AND
+    \equal{\horClipEnd}{-1} \AND
+    \equal{\verClipStart}{-1} \AND
+    \equal{\verClipEnd}{-1}
+  }{}{
+    \tikzmath{
+      \horStart = (-1.5 + \horClipStart) * \step;
+      \horEnd = (\horClipEnd) * \step;
+      \verStart = (-1.5 + \verClipStart) * \step;
+      \verEnd = (\verClipEnd) * \step;
+    }
 
-  \clip (\horStart, \verStart) rectangle + 
-        (\horEnd, \verEnd);
+    \clip (\horStart, \verStart) rectangle + 
+          (\horEnd, \verEnd);
+  }
 }
 
 \newenvironment{goban}[1][]{
