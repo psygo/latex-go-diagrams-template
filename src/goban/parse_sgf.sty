@@ -1,7 +1,3 @@
-% From [this](https://tex.stackexchange.com/a/709014/64441),
-% [this](https://tex.stackexchange.com/a/709324/64441),
-% and [this](https://tex.stackexchange.com/a/709159/64441)
-% answers by @StevenB.Segletes.
 \long\def\Firstof#1#2\endFirstof{#1}
 
 \newcommand\thecolorofB{black}
@@ -18,9 +14,25 @@
 
 \ignoreemptyitems
 
-\newcommand{\parseSgf}[1]{
+\newif\ifsgfNumbering
+
+\pgfkeys{%
+  /phili/parseSgf/.cd, 
+    sgf/.store in    = \sgf,
+    sgf              = ,
+    numbering/.is if = sgfNumbering,
+    numbering        = true,
+}
+
+% From [this](https://tex.stackexchange.com/a/709014/64441),
+% [this](https://tex.stackexchange.com/a/709324/64441),
+% and [this](https://tex.stackexchange.com/a/709159/64441)
+% answers by @StevenB.Segletes.
+\newcommand{\parseSgf}[1][]{
+  \pgfkeys{/phili/parseSgf/.cd, #1}
+
   \setsepchar{;||(||)/]/[}
-  \readlist*\Z{#1}
+  \readlist*\Z{\sgf}
 
   \foreachitem \i \in \Z[]{
     \foreachitem \z \in \Z[\icnt]{
@@ -28,11 +40,17 @@
       \itemtomacro\Z[\icnt, \zcnt, 2]\KeyValue
 
       \edef\tmp{{\csname thecolorof\KeyName\endcsname}{\KeyValue}}
+
       \if\Keytypeof\KeyName M
-        \expandafter\drawMoveFromSgfCoords\tmp
+        \ifsgfNumbering
+          \expandafter\drawMoveFromSgfCoords\tmp
+        \else
+          \expandafter\drawStoneFromSgfCoords\tmp
+        \fi
       \fi
       \if\Keytypeof\KeyName A
         \expandafter\drawStoneFromSgfCoords\tmp
       \fi
-  }}%
+    }
+  }
 }

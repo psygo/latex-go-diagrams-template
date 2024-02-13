@@ -105,12 +105,11 @@
 
         % \drawStonesFromSgfCoords{{black, ab}, {white, cd}}
         % \drawMovesFromSgfCoords{{black, ab}, {white, cd}}{false}
-        \parseSgf{\sgfC}
 
+        \parseSgf[sgf       = \sgfC, 
+                  numbering = true]
       \end{goban}
       \caption{Goban 2}\label{my_goban_2}
     \end{center}
   \end{figure}
-
-  % \parseSgfB{\sgfA}
 \end{document}

@@ -14,7 +14,7 @@ There are 3 main alternatives to doing this:
     - [x] Drawing Moves (with numbers)
     - [x] Drawing labels
     - [ ] Partial Boards
-    - [ ] Parse SGF
+    - [x] Parse SGF
     - [ ] Interactive Graphs
     - [ ] How to Export Diagrams as Images
 
