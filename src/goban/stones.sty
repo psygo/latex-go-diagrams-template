@@ -40,15 +40,19 @@
     outline width           = 0.3mm,
     fill color/.store in    = \shapeLabelFillColor,
     fill color              = white,
+    x/.store in     = \shapeLabelX,
+    x               = \xCoord,
+    y/.store in     = \shapeLabelY,
+    y               = \yCoord,
 }
 
 \newcommand{\triangleLabel}[1][]{
   \pgfkeys{/phili/shapeLabel/.cd, #1}
   
-  \pgfmathsetmacro{\triangleYCoord}{\yCoord - \stoneRadius * 0.05}
+  \pgfmathsetmacro{\triangleYCoord}{\shapeLabelY - \stoneRadius * 0.05}
   \pgfmathsetmacro{\triangleSize}{\stoneRadius * 30}
 
-  \draw (\xCoord, \triangleYCoord) node[
+  \draw (\shapeLabelX, \triangleYCoord) node[
     isosceles triangle,
     draw                          = \shapeLabelOutlineColor,
     line width                    = \shapeLabelOutlineWidth,
@@ -66,7 +70,7 @@
 
   \pgfmathsetmacro{\squareSize}{\stoneRadius * 30}
 
-  \draw (\xCoord, \yCoord) node[
+  \draw (\shapeLabelX, \shapeLabelY) node[
     draw         = \shapeLabelOutlineColor,
     line width   = \shapeLabelOutlineWidth,
     fill         = \shapeLabelFillColor,
@@ -86,7 +90,7 @@
     fill       = \shapeLabelFillColor,
     inner sep  = 0pt,
   ]
-    (\xCoord, \yCoord)
+    (\shapeLabelX, \shapeLabelY)
     circle [radius = \circleSize];
 }
 
@@ -100,14 +104,19 @@
     font family           = ,
     text/.store in        = \textLabelText,
     text                  = A,
+    x/.store in     = \textLabelX,
+    x               = \xCoord,
+    y/.store in     = \textLabelY,
+    y               = \yCoord,
 }
 
 \newcommand{\textLabel}[1][]{
   \pgfkeys{/phili/textLabel/.cd, #1}
   
   \def\textLabelFont{\fontsize{\textLabelFontSize}{0} \textLabelFontFamily}
+  \pgfmathsetmacro{\fontCorrectedX}{\textLabelX - 0.1 * \step}
 
-  \draw (\xCoord - 0.08 * \step, \yCoord)
+  \draw (\fontCorrectedX, \yCoord)
     node[
       font  = \textLabelFont,
       color = \textLabelFontColor,
@@ -118,12 +127,16 @@
   /phili/crossLabel/.cd, 
     color/.store in = \crossLabelColor,
     color           = black,
+    x/.store in     = \crossLabelX,
+    x               = \xCoord,
+    y/.store in     = \crossLabelY,
+    y               = \yCoord,
 }
 
 \newcommand{\crossLabel}[1][]{
   \pgfkeys{/phili/crossLabel/.cd, #1}
 
-  \draw (\xCoord, \yCoord) 
+  \draw (\crossLabelX, \crossLabelY) 
     node[
       color = \crossLabelColor,
       font  = \sffamily,
