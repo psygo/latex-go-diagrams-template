@@ -128,6 +128,8 @@
   /phili/textLabel/.cd, 
     font color/.store in  = \textLabelFontColor,
     font color            = black,
+    background color/.store in = \textLabelBackgroundColor,
+    background color           = white,
     font size/.store in   = \textLabelFontSize,
     font size             = 10pt,
     font family/.store in = \textLabelFontFamily,
@@ -146,11 +148,15 @@
   \def\textLabelFont{\fontsize{\textLabelFontSize}{0} \textLabelFontFamily}
   \pgfmathsetmacro{\fontCorrectedX}{\textLabelX - 0.1 * \step}
 
+  \labelBackground[fill color = \textLabelBackgroundColor,
+                   x          = \textLabelX,
+                   y          = \textLabelY,
+                   size       = \textLabelFontSize * 0.5]
   \draw (\fontCorrectedX, \yCoord)
     node[
       font  = \textLabelFont,
       color = \textLabelFontColor,
-    ] {\textLabelText};
+    ] {\bf{\textLabelText}};
 }
 
 \pgfkeys{%
@@ -235,8 +241,9 @@
 % Example: `\drawMove{black}{2}{3}`
 \newcommand{\drawMove}[3]{
   \drawStone{#1}{#2}{#3}
-  \textLabel[text       = \themoveCounter,
-             font color = \UseName{not#1}]
+  \textLabel[text             = \themoveCounter,
+             font color       = \UseName{not#1},
+             background color = #1]
 
   \stepMoveCounter
 }
