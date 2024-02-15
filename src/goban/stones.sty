@@ -32,6 +32,7 @@
 %-----------------------------------------------------------
 % Labels
 
+% TODO: add SGF coords as parameter
 \pgfkeys{%
   /phili/labelBackground/.cd, 
     fill color/.store in = \labelBackgroundFillColor,
@@ -126,20 +127,20 @@
 
 \pgfkeys{%
   /phili/textLabel/.cd, 
-    font color/.store in  = \textLabelFontColor,
-    font color            = black,
+    font color/.store in       = \textLabelFontColor,
+    font color                 = black,
     background color/.store in = \textLabelBackgroundColor,
     background color           = white,
-    font size/.store in   = \textLabelFontSize,
-    font size             = 10pt,
-    font family/.store in = \textLabelFontFamily,
-    font family           = ,
-    text/.store in        = \textLabelText,
-    text                  = A,
-    x/.store in           = \textLabelX,
-    x                     = \xCoord,
-    y/.store in           = \textLabelY,
-    y                     = \yCoord,
+    font size/.store in        = \textLabelFontSize,
+    font size                  = 10pt,
+    font family/.store in      = \textLabelFontFamily,
+    font family                = ,
+    text/.store in             = \textLabelText,
+    text                       = A,
+    x/.store in                = \textLabelX,
+    x                          = \xCoord,
+    y/.store in                = \textLabelY,
+    y                          = \yCoord,
 }
 
 \newcommand{\textLabel}[1][]{
@@ -156,13 +157,15 @@
     node[
       font  = \textLabelFont,
       color = \textLabelFontColor,
-    ] {\bf{\textLabelText}};
+    ] {\textLabelText};
 }
 
 \pgfkeys{%
   /phili/crossLabel/.cd, 
     color/.store in = \crossLabelColor,
     color           = black,
+    size/.store in  = \crossLabelSize,
+    size            = 10pt,
     x/.store in     = \crossLabelX,
     x               = \xCoord,
     y/.store in     = \crossLabelY,
@@ -172,10 +175,13 @@
 \newcommand{\crossLabel}[1][]{
   \pgfkeys{/phili/crossLabel/.cd, #1}
 
-  \draw (\crossLabelX, \crossLabelY) 
+  \pgfmathsetmacro{\fontCorrectedX}{\textLabelX - 0.1 * \step}
+  \def\crossLabelFont{\fontsize{\crossLabelSize}{0} \sffamily}
+
+  \draw (\fontCorrectedX, \crossLabelY) 
     node[
       color = \crossLabelColor,
-      font  = \sffamily,
+      font  = \crossLabelFont,
     ] {X};
 }
 
