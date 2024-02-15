@@ -33,48 +33,76 @@
 % Labels
 
 \pgfkeys{%
+  /phili/labelBackground/.cd, 
+    fill color/.store in = \labelBackgroundFillColor,
+    fill color           = black,
+    x/.store in          = \labelBackgroundX,
+    x                    = \xCoord,
+    y/.store in          = \labelBackgroundY,
+    y                    = \yCoord,
+    size/.store in       = \labelBackgroundSize,
+    size                 = \stoneRadius * 0.6 cm,
+}
+
+\newcommand{\labelBackground}[1][]{
+  \pgfkeys{/phili/labelBackground/.cd, #1}
+
+  \draw (\labelBackgroundX, \labelBackgroundY) [
+    fill      = \labelBackgroundFillColor,
+    draw      = \labelBackgroundFillColor,
+    inner sep = 0pt,
+  ] circle [radius = \labelBackgroundSize];
+}
+
+\pgfkeys{%
   /phili/shapeLabel/.cd, 
     outline color/.store in = \shapeLabelOutlineColor,
     outline color           = black,
     outline width/.store in = \shapeLabelOutlineWidth,
-    outline width           = 0.3mm,
+    outline width           = 0.45mm,
     fill color/.store in    = \shapeLabelFillColor,
     fill color              = white,
-    x/.store in     = \shapeLabelX,
-    x               = \xCoord,
-    y/.store in     = \shapeLabelY,
-    y               = \yCoord,
+    x/.store in             = \shapeLabelX,
+    x                       = \xCoord,
+    y/.store in             = \shapeLabelY,
+    y                       = \yCoord,
+    shape size/.store in    = \shapeLabelSize,
+    shape size              = \stoneRadius * 0.75 cm,
 }
 
 \newcommand{\triangleLabel}[1][]{
   \pgfkeys{/phili/shapeLabel/.cd, #1}
   
-  \pgfmathsetmacro{\triangleYCoord}{\shapeLabelY - \stoneRadius * 0.05}
-  \pgfmathsetmacro{\triangleSize}{\stoneRadius * 30}
-
-  \draw (\shapeLabelX, \triangleYCoord) node[
-    isosceles triangle,
-    draw                          = \shapeLabelOutlineColor,
-    line width                    = \shapeLabelOutlineWidth,
-    fill                          = \shapeLabelFillColor,
-    minimum height                = \triangleSize,
-    minimum width                 = \triangleSize,
-    rotate                        = 90,
-    isosceles triangle apex angle = 60,
-    inner sep                     = 0pt,
-  ] {};
+  \labelBackground[fill color = \shapeLabelFillColor,
+                   x          = \shapeLabelX,
+                   y          = \shapeLabelY,
+                   size       = \shapeLabelSize * 1.05]
+  \draw (\shapeLabelX, \shapeLabelY) 
+    node[
+      isosceles triangle,
+      draw                          = \shapeLabelOutlineColor,
+      line width                    = \shapeLabelOutlineWidth,
+      fill                          = \shapeLabelFillColor,
+      minimum height                = \shapeLabelSize,
+      minimum width                 = \shapeLabelSize,
+      rotate                        = 90,
+      isosceles triangle apex angle = 60,
+      inner sep                     = 0pt,
+    ] {};
 }
 
 \newcommand{\squareLabel}[1][]{
   \pgfkeys{/phili/shapeLabel/.cd, #1}
 
-  \pgfmathsetmacro{\squareSize}{\stoneRadius * 30}
-
+  \labelBackground[fill color = \shapeLabelFillColor,
+                   x          = \shapeLabelX,
+                   y          = \shapeLabelY,
+                   size       = \shapeLabelSize * 1.05]
   \draw (\shapeLabelX, \shapeLabelY) node[
     draw         = \shapeLabelOutlineColor,
     line width   = \shapeLabelOutlineWidth,
     fill         = \shapeLabelFillColor,
-    minimum size = \squareSize,
+    minimum size = \shapeLabelSize,
     inner sep    = 0pt,
   ] {}; 
 }
@@ -82,8 +110,10 @@
 \newcommand{\circleLabel}[1][]{
   \pgfkeys{/phili/shapeLabel/.cd, #1}
 
-  \pgfmathsetmacro{\circleSize}{\stoneRadius * 0.5}
-
+  \labelBackground[fill color = \shapeLabelFillColor,
+                   x          = \shapeLabelX,
+                   y          = \shapeLabelY,
+                   size       = \shapeLabelSize * 1.05]
   \draw[
     draw       = \shapeLabelOutlineColor,
     line width = \shapeLabelOutlineWidth,
@@ -91,7 +121,7 @@
     inner sep  = 0pt,
   ]
     (\shapeLabelX, \shapeLabelY)
-    circle [radius = \circleSize];
+    circle [radius = \shapeLabelSize / 2];
 }
 
 \pgfkeys{%
@@ -104,10 +134,10 @@
     font family           = ,
     text/.store in        = \textLabelText,
     text                  = A,
-    x/.store in     = \textLabelX,
-    x               = \xCoord,
-    y/.store in     = \textLabelY,
-    y               = \yCoord,
+    x/.store in           = \textLabelX,
+    x                     = \xCoord,
+    y/.store in           = \textLabelY,
+    y                     = \yCoord,
 }
 
 \newcommand{\textLabel}[1][]{
