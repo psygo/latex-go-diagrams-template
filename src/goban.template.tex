@@ -79,33 +79,6 @@
     ;PL[W]AB[dq]AW[eq]
   )}
 
-\begin{goban}[board dimension       = 10,
-              board size            = 19,
-              scale                 = 1,
-              outline line width    = 0.5mm,
-              coords                = false,
-              coords font           = \sffamily,
-              coords font size      = 15pt,
-              horizontal clip start = 1,
-              horizontal clip end   = 19,
-              vertical clip start   = 1,
-              vertical clip end     = 19]
-  \parseSgf[sgf       = \sgfC, 
-            numbering = true]
-  \triangleLabel[outline width = 0.45mm]
-  \stone[color = black,
-         x     = 4,
-         y     = 4,]
-  \squareLabel[outline width = 0.4mm,
-               fill color    = black,
-               outline color = white,
-               shape size    = 0.15cm]
-  \move[color = white,
-         x    = 5,
-         y    = 5]
-
-\end{goban}
-
   \begin{figure}[ht]
     \begin{center}
       \begin{goban}[board dimension       = 10,
@@ -133,6 +106,12 @@
                      fill color    = black,
                      outline color = white,
                      shape size    = 0.15cm]
+        \circleLabel[outline width = 0.5mm,
+                     fill color    = white,
+                     outline color = black,
+                     shape size    = 0.3cm,
+                     x     = 2 * \step,
+                     y     = 4 * \step,]
         \move[color = white,
                x    = 5,
                y    = 5]
