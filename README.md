@@ -17,6 +17,7 @@ There are 3 main alternatives to doing this:
     - [x] Parse SGF
     - [ ] Interactive Graphs
     - [ ] How to Export Diagrams as Images
+    - [ ] Symbols and Labels that could be used in text as well
 
 > An honorable mention is [GoWrite2](https://gowrite.net/GOWrite2.html), which is what I've used in the past to create the diagrams in [this book translation](https://github.com/FanaroEngineering/traducao_como_jogar_go).
 
